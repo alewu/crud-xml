@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans default-lazy-init="true"
+       xmlns="http://www.springframework.org/schema/beans"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
+       http://www.springframework.org/schema/context  
+       http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+
+    <!-- 扫描除了控制器以外的包 -->
+    <context:component-scan base-package="com.koko">
+        <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+        <context:exclude-filter type="annotation" expression="org.springframework.web.bind.annotation.RestController"/>
+        <context:exclude-filter type="annotation"
+                                expression="org.springframework.web.bind.annotation.ControllerAdvice"/>
+    </context:component-scan>
+
+    <!-- 配置数据源 -->
+
+    <!--1.引入外部配置文件 -->
+    <!--<context:property-placeholder location="classpath:jdbc.properties"/>-->
+    <!-- 使用spring自带的占位符替换功能，可以实现注解方式获取属性文件中的配置值 -->
+    <bean class="com.koko.crud.util.common.ExtendedPropertyPlaceholderConfigurer">
+        <!-- 允许JVM参数覆盖 -->
+        <property name="systemPropertiesModeName" value="SYSTEM_PROPERTIES_MODE_OVERRIDE" />
+        <!-- 忽略没有找到的资源文件 -->
+        <property name="ignoreResourceNotFound" value="true" />
+        <!-- 配置资源文件 -->
+        <property name="locations">
+            <list>
+                <value>classpath:jdbc.properties</value>
+                <!--<value>classpath:log4j.properties</value>-->
+            </list>
+        </property>
+    </bean>
+
+    <!--2.配置数据库连接池 -->
+    <bean id="pooledDataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
+          p:driverClass="${jdbc.driverClass}"
+          p:jdbcUrl="${jdbc.url}"
+          p:user="${jdbc.username}"
+          p:password="${jdbc.password}"
+    />
+
+</beans>

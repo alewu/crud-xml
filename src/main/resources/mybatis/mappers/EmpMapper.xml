@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.koko.crud.dao.EmpMapper">
+    <resultMap id="BaseResultMap" type="com.koko.crud.bean.Emp">
+        <id column="emp_id" jdbcType="INTEGER" property="empId"/>
+        <result column="dept_id" jdbcType="INTEGER" property="deptId"/>
+        <result column="emp_name" jdbcType="VARCHAR" property="empName"/>
+        <result column="age" jdbcType="BIT" property="age"/>
+        <result column="gender" jdbcType="VARCHAR" property="gender"/>
+        <result column="email" jdbcType="VARCHAR" property="email"/>
+        <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate"/>
+        <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        emp_id, dept_id, emp_name, age, gender, email, gmt_create, gmt_modified
+    </sql>
+
+    <resultMap id="WithDeptResultMap" type="com.koko.crud.bean.Emp">
+        <id column="emp_id" jdbcType="INTEGER" property="empId" />
+        <result column="emp_name" jdbcType="VARCHAR" property="empName" />
+        <result column="gender" jdbcType="CHAR" property="gender" />
+        <result column="email" jdbcType="VARCHAR" property="email" />
+        <result column="dept_id" jdbcType="INTEGER" property="deptId" />
+        <!-- 关联department信息 指定联合查询出的字段信息封装 -->
+        <association property="dept" javaType="com.koko.crud.bean.Dept" >
+            <id column="dept_id" property="deptId" />
+            <result column="dept_name" property="deptName" />
+        </association>
+    </resultMap>
+    <sql id="WithDept_Column_List">
+        e.emp_id, e.emp_name, e.gender,e.email, e.dept_id,d.dept_id,d.dept_name
+    </sql>
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from emp
+        where emp_id = #{empId,jdbcType=INTEGER}
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from emp
+    where emp_id = #{empId,jdbcType=INTEGER}
+  </delete>
+
+    <insert id="insert" parameterType="com.koko.crud.bean.Emp">
+    insert into emp (emp_id, dept_id, emp_name, 
+      age, gender, email, gmt_create, 
+      gmt_modified)
+    values (#{empId,jdbcType=INTEGER}, #{deptId,jdbcType=INTEGER}, #{empName,jdbcType=VARCHAR}, 
+      #{age,jdbcType=BIT}, #{gender,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{gmtCreate,jdbcType=TIMESTAMP}, 
+      #{gmtModified,jdbcType=TIMESTAMP})
+  </insert>
+
+    <insert id="insertSelective" parameterType="com.koko.crud.bean.Emp">
+        insert into emp
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="empId != null">
+                emp_id,
+            </if>
+            <if test="deptId != null">
+                dept_id,
+            </if>
+            <if test="empName != null">
+                emp_name,
+            </if>
+            <if test="age != null">
+                age,
+            </if>
+            <if test="gender != null">
+                gender,
+            </if>
+            <if test="email != null">
+                email,
+            </if>
+            <if test="gmtCreate != null">
+                gmt_create,
+            </if>
+            <if test="gmtModified != null">
+                gmt_modified,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="empId != null">
+                #{empId,jdbcType=INTEGER},
+            </if>
+            <if test="deptId != null">
+                #{deptId,jdbcType=INTEGER},
+            </if>
+            <if test="empName != null">
+                #{empName,jdbcType=VARCHAR},
+            </if>
+            <if test="age != null">
+                #{age,jdbcType=BIT},
+            </if>
+            <if test="gender != null">
+                #{gender,jdbcType=VARCHAR},
+            </if>
+            <if test="email != null">
+                #{email,jdbcType=VARCHAR},
+            </if>
+            <if test="gmtCreate != null">
+                #{gmtCreate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="gmtModified != null">
+                #{gmtModified,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.koko.crud.bean.Emp">
+        update emp
+        <set>
+            <if test="deptId != null">
+                dept_id = #{deptId,jdbcType=INTEGER},
+            </if>
+            <if test="empName != null">
+                emp_name = #{empName,jdbcType=VARCHAR},
+            </if>
+            <if test="age != null">
+                age = #{age,jdbcType=BIT},
+            </if>
+            <if test="gender != null">
+                gender = #{gender,jdbcType=VARCHAR},
+            </if>
+            <if test="email != null">
+                email = #{email,jdbcType=VARCHAR},
+            </if>
+            <if test="gmtCreate != null">
+                gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="gmtModified != null">
+                gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where emp_id = #{empId,jdbcType=INTEGER}
+    </update>
+
+    <update id="updateByPrimaryKey" parameterType="com.koko.crud.bean.Emp">
+    update emp
+    set dept_id = #{deptId,jdbcType=INTEGER},
+      emp_name = #{empName,jdbcType=VARCHAR},
+      age = #{age,jdbcType=BIT},
+      gender = #{gender,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      gmt_modified = #{gmtModified,jdbcType=TIMESTAMP}
+    where emp_id = #{empId,jdbcType=INTEGER}
+  </update>
+
+    <!-- 查询员工同时带部门信息 -->
+    <select id="getAll" resultMap="WithDeptResultMap">
+        SELECT
+        <include refid="WithDept_Column_List"/>
+        FROM emp e
+        LEFT JOIN dept d ON e.dept_id = d.dept_id
+    </select>
+</mapper>
