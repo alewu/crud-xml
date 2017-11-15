@@ -1,0 +1,14 @@
+@startuml
+title  sso
+
+Browser -[#green]> Server: Authentication Request
+activate Server #red
+Server --[#blue]> Browser: Authentication Response
+deactivate Server
+Server -> Server: Create A Session
+activate Server #pink
+Server -> Server : Validate
+deactivate Server
+note right #green:username、password
+
+@enduml

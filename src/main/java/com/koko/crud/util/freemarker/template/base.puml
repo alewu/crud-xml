@@ -1,0 +1,37 @@
+@startuml
+
+class BaseServiceImpl
+interface BaseService
+interface BaseDAO
+
+BaseService <|.. BaseServiceImpl
+class BaseServiceImpl{
+    -BaseDAO baseDAO
+}
+
+
+interface BaseService {
++int insertOne(T t)
++int deleteOne(Object obj)
++int updateOne(T t)
++T getOne(Object obj)
+}
+interface BaseDAO {
++int insertOne(T t)
++int deleteOne(Object obj)
++int updateOne(T t)
++T getOne(Object obj)
+}
+
+class UserServiceImpl
+interface UserService
+interface UserDAO
+
+UserService <|.. UserServiceImpl
+BaseServiceImpl <|-- UserServiceImpl
+BaseService <|--- UserService
+
+class UserServiceImpl{
+    -UserDAO userDAO
+}
+@enduml

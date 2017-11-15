@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.koko.crud.util.freemarker.test.dao.UserInfoDAO">
+
+    <!-- 通用查询结果列：数据库表字段 -->
+    <sql id="Base_Column_List">
+        id,
+        nick_name,
+        email,
+        phone,
+        gmt_create,
+        gmt_modified
+    </sql>
+    <!-- 通用resultMap：实体类成员变量一一对应数据库表字段 -->
+    <resultMap type="com.koko.crud.util.freemarker.test.entity.UserInfo" id="BaseResultMap">
+        <id property="id" column="id" />
+        <result property="nickName" column="nick_name" />
+        <result property="email" column="email" />
+        <result property="phone" column="phone" />
+        <result property="gmtCreate" column="gmt_create" />
+        <result property="gmtModified" column="gmt_modified" />
+    </resultMap>
+
+    <insert id="insertOne" parameterType="com.koko.crud.util.freemarker.test.entity.UserInfo">
+        INSERT INTO tb_user_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null and id !=''">
+                id,
+            </if>
+            <if test="nickName != null and nickName !=''">
+                nick_name,
+            </if>
+            <if test="email != null and email !=''">
+                email,
+            </if>
+            <if test="phone != null and phone !=''">
+                phone,
+            </if>
+            <if test="gmtCreate != null">
+                gmt_create,
+            </if>
+            <if test="gmtModified != null">
+                gmt_modified,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null and id !=''">
+                #{id},
+            </if>
+            <if test="nickName != null and nickName !=''">
+                #{nickName},
+            </if>
+            <if test="email != null and email !=''">
+                #{email},
+            </if>
+            <if test="phone != null and phone !=''">
+                #{phone},
+            </if>
+            <if test="gmtCreate != null">
+                #{gmtCreate},
+            </if>
+            <if test="gmtModified != null">
+                #{gmtModified},
+            </if>
+        </trim>
+    </insert>
+
+    <delete id="deleteOne" parameterType="java.lang.Integer">
+        DELETE FROM tb_user_info
+        WHERE id = #{id}
+    </delete>
+
+    <update id="updateOne" parameterType="com.koko.crud.util.freemarker.test.entity.UserInfo">
+        UPDATE tb_user_info
+        <set>
+            <if test="nickName != null and nickName !=''">
+                nick_name = #{nickName},
+            </if>
+            <if test="email != null and email !=''">
+                email = #{email},
+            </if>
+            <if test="phone != null and phone !=''">
+                phone = #{phone},
+            </if>
+            <if test="gmtCreate != null">
+                gmt_create = #{gmtCreate},
+            </if>
+            <if test="gmtModified != null">
+                gmt_modified = #{gmtModified},
+            </if>
+        </set>
+        WHERE id = #{id}
+    </update>
+
+    <select id="getOne" resultMap="BaseResultMap">
+        SELECT <include refid="Base_Column_List"/>
+        FROM tb_user_info
+        WHERE id = #{id}
+    </select>
+
+
+</mapper>
+
+
