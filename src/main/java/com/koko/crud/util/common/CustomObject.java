@@ -1,4 +1,4 @@
-package com.koko.crud.util;
+package com.koko.crud.util.common;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;

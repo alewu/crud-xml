@@ -1,4 +1,4 @@
-package com.koko.crud.util;
+package com.koko.crud.util.common;
 
 import java.util.HashMap;
 import java.util.Map;

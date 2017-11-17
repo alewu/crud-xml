@@ -1,5 +1,6 @@
 package com.koko.crud.util.freemarker.util;
 
+
 import com.koko.crud.util.freemarker.bean.Field;
 import com.koko.crud.util.freemarker.bean.TableMetaData;
 import org.springframework.util.StringUtils;
@@ -8,6 +9,7 @@ import java.sql.*;
 import java.util.LinkedList;
 import java.util.List;
 
+
 public class TableUtils {
     public static final String TABLE = "table";
     public static final String FILED = "filed";
@@ -15,12 +17,11 @@ public class TableUtils {
 
     private static final String REGEX = "_";
 
-    private static final String URL = "jdbc:mysql://localhost:3306/test?serverTimezone=UTC&characterEncoding=utf-8";
+    private static final String URL = "jdbc:mysql://localhost:3306/mybatis?serverTimezone=UTC&characterEncoding=utf-8";
     private static final String USER = "root";
     private static final String PASSWORD = "root";
     private static final String DRIVER = "com.mysql.jdbc.Driver";
 
-    private static final String TABLE_NAME = "people";
 
     public static Connection getConnection() {
         try {

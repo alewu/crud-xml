@@ -2,7 +2,7 @@ package com.koko.crud.controller.advice;
 
 import com.koko.crud.exception.RRException;
 import com.koko.crud.exception.UnloginException;
-import com.koko.crud.util.R;
+import com.koko.crud.util.common.R;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;

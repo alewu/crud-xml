@@ -1,4 +1,4 @@
-package com.koko.crud.util;
+package com.koko.crud.util.common;
 
 import org.apache.commons.io.FileUtils;
 import org.springframework.web.multipart.MultipartFile;

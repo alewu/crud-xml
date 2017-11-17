@@ -1,5 +1,6 @@
 package com.koko.crud.util.freemarker;
 
+
 import com.koko.crud.util.freemarker.bean.TableMetaData;
 import com.koko.crud.util.freemarker.util.FreeMarkerTemplateUtils;
 import com.koko.crud.util.freemarker.util.TableUtils;
@@ -7,13 +8,15 @@ import freemarker.template.Template;
 
 import java.io.*;
 import java.sql.ResultSet;
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class FreeMarkerTest {
     private static final String AUTHOR = "alewu";
-    private static final String CURRENT_DATE = "2017-11-04";
+    private static final String CURRENT_DATE = "2017-11-16";
     private static final String PACKAGE_NAME = "com.koko.crud.util.freemarker.test";
-    private static final String TEMPLATE_PATH = "F:\\java\\eclipseworkspace\\crud\\src\\main\\java\\com\\koko\\crud\\util\\freemarker\\test\\";
+    private static final String TEMPLATE_PATH = "F:\\java\\eclipseworkspace\\my-project\\crud\\src\\main\\java\\com\\koko\\crud\\util\\freemarker\\test\\";
     private static final String ENTITY_PATH = "entity\\";
     private static final String CONTROLLER_PATH = "controller\\";
     private static final String SERVICE_PATH = "service\\";

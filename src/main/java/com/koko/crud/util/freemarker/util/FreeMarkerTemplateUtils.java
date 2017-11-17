@@ -5,7 +5,6 @@ import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateExceptionHandler;
 
-import java.io.File;
 import java.io.IOException;
 /**
  * @author alewu
@@ -16,19 +15,12 @@ public class FreeMarkerTemplateUtils {
 
     /** 通过Freemarker的Configuration读取相应的ftl **/
     private static final Configuration CONFIGURATION = new Configuration(Configuration.VERSION_2_3_26);
-    public static final String TEMPLATE_PATH  = "F:\\java\\eclipseworkspace\\crud\\src\\main\\java\\com\\koko\\crud\\util\\freemarker\\template";
 
     static{
-        // 指定加载模板所在的路径
-        try {
-            CONFIGURATION.setDirectoryForTemplateLoading(new File(TEMPLATE_PATH));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        // TODO
-        //CONFIGURATION.setClassForTemplateLoading(FreeMarkerTemplateUtils.class,"/util/freemarker/template");
-        //ClassTemplateLoader ctl = new ClassTemplateLoader(FreeMarkerTemplateUtils.class, "/freemarker");
-        //CONFIGURATION.setTemplateLoader(ctl);
+        System.out.println(FreeMarkerTemplateUtils.class.getClassLoader().getResource("").getPath());
+        System.out.println(FreeMarkerTemplateUtils.class.getResource("").getPath());
+        System.out.println(FreeMarkerTemplateUtils.class.getResource("/").getPath());
+        CONFIGURATION.setClassForTemplateLoading(FreeMarkerTemplateUtils.class, "/com/koko/crud/util/freemarker/template");
         CONFIGURATION.setDefaultEncoding("UTF-8");
         CONFIGURATION.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);
         CONFIGURATION.setCacheStorage(NullCacheStorage.INSTANCE);
