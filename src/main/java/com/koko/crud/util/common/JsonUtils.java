@@ -1,4 +1,4 @@
-package com.koko.crud.util;
+package com.koko.crud.util.common;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JavaType;

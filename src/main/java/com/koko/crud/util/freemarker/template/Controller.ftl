@@ -12,6 +12,8 @@ import ${packageName}.service.${entityName}Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import static
+
 import java.util.List;
 /**
 * @author ${author}
@@ -34,7 +36,7 @@ public class ${entityName}Controller {
         ${entityName?uncap_first}Service.insertOne(${entityName?uncap_first});
         return Response.success();
     }
-    <#if (fields[3].columnName != "gmt_create") >
+    <#if !( fields[2].columnName ? ends_with("_id") && fields[3].columnName == "gmt_create" ) >
     /**
      * @author ${author}
      * @date ${date}

@@ -1,4 +1,4 @@
-package com.koko.crud.util.wechat;
+package com.koko.crud.util.common;
 
 import javax.net.ssl.X509TrustManager;
 import java.security.cert.CertificateException;

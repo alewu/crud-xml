@@ -1,4 +1,4 @@
-package com.koko.crud.util;
+package com.koko.crud.util.common;
 
 import com.koko.crud.util.freemarker.bean.TableMetaData;
 import com.koko.crud.util.freemarker.util.TableUtils;

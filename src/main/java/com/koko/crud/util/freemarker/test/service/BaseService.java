@@ -3,7 +3,7 @@ package com.koko.crud.util.freemarker.test.service;
 
 /**
  * @author alewu
- * @date 2017-11-04
+ * @date 2017-11-16
  * @description 基础接口
  */
 public interface BaseService<T> {

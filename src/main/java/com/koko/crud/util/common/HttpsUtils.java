@@ -1,7 +1,6 @@
-package com.koko.crud.util;
+package com.koko.crud.util.common;
 
 import com.alibaba.fastjson.JSONObject;
-import com.koko.crud.util.wechat.MyX509TrustManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

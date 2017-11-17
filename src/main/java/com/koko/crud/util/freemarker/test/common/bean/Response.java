@@ -1,6 +1,5 @@
 package com.koko.crud.util.freemarker.test.common.bean;
 
-import com.koko.crud.common.response.MyResponse;
 import lombok.Data;
 
 import java.util.HashMap;
