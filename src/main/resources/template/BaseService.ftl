@@ -1,12 +1,11 @@
-package ${packageName}.${layer ? lowerCase};
-
+package ${packageName}.service;
 
 /**
  * @author ${author}
  * @date ${date}
  * @description 基础接口
  */
-public interface Base${layer}<T> {
+public interface BaseService<T> {
 
     int insertOne(T t);
 
