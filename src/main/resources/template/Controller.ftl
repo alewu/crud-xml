@@ -12,16 +12,15 @@ import ${packageName}.service.${entityName}Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import static
+import static ${packageName}.constants.RestURIConstants.*;
 
-import java.util.List;
 /**
-* @author ${author}
-* @date ${date}
-* @description ${entityName} 控制器
-*/
+ * @author ${author}
+ * @date ${date}
+ * @description ${entityName} 控制器
+ */
 @RestController
-@RequestMapping(RestURIConstants.APP_PREFIX)
+@RequestMapping(APP_PREFIX)
 public class ${entityName}Controller {
     @Autowired
     private ${entityName}Service ${entityName?uncap_first}Service;
@@ -31,7 +30,7 @@ public class ${entityName}Controller {
      * @date ${date}
      * @description 增加单个${entityName}
      */
-    @PostMapping(RestURIConstants.${entityName?upper_case}S)
+    @PostMapping(${entityName?upper_case}S)
     public Response insertOne(${entityName} ${entityName?uncap_first}){
         ${entityName?uncap_first}Service.insertOne(${entityName?uncap_first});
         return Response.success();
@@ -42,7 +41,7 @@ public class ${entityName}Controller {
      * @date ${date}
      * @description 删除单个${entityName}
      */
-    @DeleteMapping(RestURIConstants.${entityName?upper_case}_ID)
+    @DeleteMapping(${entityName?upper_case}_ID)
     public Response deleteOne(@PathVariable String ${entityName?uncap_first}Id){
         ${entityName?uncap_first}Service.deleteOne(${entityName?uncap_first}Id);
         return Response.success();
@@ -53,7 +52,7 @@ public class ${entityName}Controller {
      * @date ${date}
      * @description 更新单个${entityName}
      */
-    @PutMapping(RestURIConstants.${entityName?upper_case}_ID)
+    @PutMapping(${entityName?upper_case}_ID)
     public Response updateOne(@PathVariable String ${entityName?uncap_first}Id,${entityName} ${entityName?uncap_first}){
         int m = ${entityName?uncap_first}Service.updateOne(${entityName?uncap_first});
         return Response.success();
@@ -64,7 +63,7 @@ public class ${entityName}Controller {
      * @date ${date}
      * @description 查询单个${entityName}
      */
-    @GetMapping(RestURIConstants.${entityName?upper_case}_ID)
+    @GetMapping(${entityName?upper_case}_ID)
     public Response getOne(@PathVariable String ${entityName?uncap_first}Id){
         ${entityName} ${entityName?uncap_first} = ${entityName?uncap_first}Service.getOne(${entityName?uncap_first}Id);
         return Response.success().put("${entityName?uncap_first}", ${entityName?uncap_first});
@@ -75,7 +74,7 @@ public class ${entityName}Controller {
      * @date ${date}
      * @description 分页查询${entityName}
      */
-    @GetMapping(RestURIConstants.${entityName?upper_case}S)
+    @GetMapping(${entityName?upper_case}S)
     public Response list${entityName}(PageParams pageParams){
         PageBean<${entityName}> pageBean = ${entityName?uncap_first}Service.list${entityName}(pageParams);
         return Response.success().put("pageBean", pageBean);

@@ -6,7 +6,10 @@ import com.koko.crud.util.freemarker.util.FreeMarkerTemplateUtils;
 import com.koko.crud.util.freemarker.util.TableUtils;
 import freemarker.template.Template;
 
-import java.io.*;
+import java.io.File;
+import java.io.Writer;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 import java.sql.ResultSet;
 import java.util.HashMap;
 import java.util.List;
@@ -26,13 +29,18 @@ public class FreeMarkerTest {
 
 
     private static final String suffix = ".java";
+    private static final String templateSuffix = ".ftl";
     private ResultSet resultSet = TableUtils.getResultSet();
 
 
     public static void main(String[] args) throws Exception {
+        Long start = System.currentTimeMillis();
+
         FreeMarkerTest freeMarkerTest = new FreeMarkerTest();
         freeMarkerTest.generate();
-        System.out.println("finished!!!");
+
+        Long end = System.currentTimeMillis();
+        System.out.println("finished!!!" + "\n\rtime >> " + (end - start) +" ms");
     }
 
     public void generate() throws Exception {
@@ -41,7 +49,7 @@ public class FreeMarkerTest {
             tableMetaDatas = TableUtils.getTableMetaData();
             for (TableMetaData tableMetaData : tableMetaDatas) {
                 // 生成Model文件
-                generateModelFile(tableMetaData);
+                generateEntityFile(tableMetaData);
                 // 生成Mapper文件
                 generateMapperFile(tableMetaData);
                 // 生成服务层接口文件
@@ -52,7 +60,6 @@ public class FreeMarkerTest {
                 generateCommonDaoFile(tableMetaData);
                 // 生成controller文件
                 generateControllerFile(tableMetaData);
-
             }
             generateRestURIConstantsFile(tableMetaDatas);
             generateBaseServiceImplFile();
@@ -68,9 +75,9 @@ public class FreeMarkerTest {
         }
     }
 
-    private void generateModelFile(TableMetaData tableMetaData) throws Exception {
+    private void generateEntityFile(TableMetaData tableMetaData) throws Exception {
         final String path = TEMPLATE_PATH + ENTITY_PATH + tableMetaData.getEntityName() + suffix;
-        final String templateName = "Entity.ftl";
+        final String templateName = "Entity";
         File mapperFile = new File(path);
         Map<String, Object> dataMap = new HashMap<>();
         dataMap.put("tableMetaData", tableMetaData);
@@ -79,7 +86,7 @@ public class FreeMarkerTest {
 
     private void generateControllerFile(TableMetaData tableMetaData) throws Exception {
         final String path = TEMPLATE_PATH + CONTROLLER_PATH + tableMetaData.getEntityName() + "Controller" + suffix;
-        final String templateName = "Controller.ftl";
+        final String templateName = "Controller";
         File mapperFile = new File(path);
         Map<String, Object> dataMap = new HashMap<>();
         dataMap.put("tableMetaData", tableMetaData);
@@ -88,7 +95,7 @@ public class FreeMarkerTest {
 
     private void generateCommonServiceImplFile(TableMetaData tableMetaData) throws Exception {
         final String path = TEMPLATE_PATH + SERVICE_PATH + "impl\\" + tableMetaData.getEntityName() + "ServiceImpl" + suffix;
-        final String templateName = "CommonServiceImpl.ftl";
+        final String templateName = "CommonServiceImpl";
         File mapperFile = new File(path);
         Map<String, Object> dataMap = new HashMap<>();
         dataMap.put("entityName", tableMetaData.getEntityName());
@@ -97,7 +104,7 @@ public class FreeMarkerTest {
 
     private void generateCommonDaoFile(TableMetaData tableMetaData) throws Exception {
         final String path = TEMPLATE_PATH + DAO_PATH + tableMetaData.getEntityName() + "DAO" + suffix;
-        final String templateName = "CommonDAO.ftl";
+        final String templateName = "CommonDAO";
         File mapperFile = new File(path);
         Map<String, Object> dataMap = new HashMap<>();
         dataMap.put("entityName", tableMetaData.getEntityName());
@@ -107,7 +114,7 @@ public class FreeMarkerTest {
 
     private void generateCommonServiceFile(TableMetaData tableMetaData) throws Exception {
         final String path = TEMPLATE_PATH + SERVICE_PATH + tableMetaData.getEntityName() + "Service" + suffix;
-        final String templateName = "CommonService.ftl";
+        final String templateName = "CommonService";
         File mapperFile = new File(path);
         Map<String, Object> dataMap = new HashMap<>();
         dataMap.put("entityName", tableMetaData.getEntityName());
@@ -117,9 +124,8 @@ public class FreeMarkerTest {
     }
 
     private void generateMapperFile(TableMetaData tableMetaData) throws Exception {
-        final String suffix = "Mapper.xml";
-        final String path = TEMPLATE_PATH + MAPPER_PATH + tableMetaData.getEntityName() + suffix;
-        final String templateName = "Mapper.ftl";
+        final String path = TEMPLATE_PATH + MAPPER_PATH + tableMetaData.getEntityName() + "Mapper.xml";
+        final String templateName = "Mapper";
         File mapperFile = new File(path);
         Map<String, Object> dataMap = new HashMap<>();
         dataMap.put("tableMetaData", tableMetaData);
@@ -129,7 +135,7 @@ public class FreeMarkerTest {
 
     private void generateBaseDAOFile() throws Exception {
         final String path = TEMPLATE_PATH + DAO_PATH + "BaseDAO" + suffix;
-        final String templateName = "BaseServiceDAO.ftl";
+        final String templateName = "BaseServiceDAO";
         File mapperFile = new File(path);
         Map<String, Object> dataMap = new HashMap<>();
         dataMap.put("layer", "DAO");
@@ -138,7 +144,7 @@ public class FreeMarkerTest {
 
     private void generateBaseServiceFile() throws Exception {
         final String path = TEMPLATE_PATH + SERVICE_PATH + "BaseService" + suffix;
-        final String templateName = "BaseServiceDAO.ftl";
+        final String templateName = "BaseServiceDAO";
         File mapperFile = new File(path);
         Map<String, Object> dataMap = new HashMap<>();
         dataMap.put("layer", "Service");
@@ -146,16 +152,17 @@ public class FreeMarkerTest {
     }
 
     private void generateBaseServiceImplFile() throws Exception {
-        final String path = TEMPLATE_PATH + SERVICE_PATH + "impl\\" + "BaseServiceImpl" + suffix;
-        final String templateName = "BaseServiceImpl.ftl";
-        File mapperFile = new File(path);
+        final String templateName = "BaseServiceImpl";
+        final String path = TEMPLATE_PATH + SERVICE_PATH + "impl\\";
+        final String file = templateName + suffix;
+        File mapperFile = new File(path+file);
         Map<String, Object> dataMap = new HashMap<>();
         generateFileByTemplate(templateName, mapperFile, dataMap);
     }
 
     private void generateRestURIConstantsFile(List<TableMetaData> tableMetaDatas) throws Exception {
         final String path = TEMPLATE_PATH + CONSTANTS_PATH + "RestURIConstants" + suffix;
-        final String templateName = "RestURIConstants.ftl";
+        final String templateName = "RestURIConstants";
         File mapperFile = new File(path);
         Map<String, Object> dataMap = new HashMap<>();
         dataMap.put("tableMetaDatas", tableMetaDatas);
@@ -163,13 +170,11 @@ public class FreeMarkerTest {
     }
 
     private void generateFileByTemplate(final String templateName, File file, Map<String, Object> dataMap) throws Exception {
-        Template template = FreeMarkerTemplateUtils.getTemplate(templateName);
-        FileOutputStream fos = new FileOutputStream(file);
+        Template template = FreeMarkerTemplateUtils.getTemplate(templateName + templateSuffix);
         dataMap.put("packageName", PACKAGE_NAME);
         dataMap.put("author", AUTHOR);
         dataMap.put("date", CURRENT_DATE);
-        dataMap.put("description", "");
-        Writer out = new BufferedWriter(new OutputStreamWriter(fos, "utf-8"), 10240);
+        Writer out = Files.newBufferedWriter(file.toPath(), StandardCharsets.UTF_8);
         template.process(dataMap, out);
 
 
