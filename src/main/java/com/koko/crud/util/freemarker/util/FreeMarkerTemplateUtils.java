@@ -6,6 +6,7 @@ import freemarker.template.Template;
 import freemarker.template.TemplateExceptionHandler;
 
 import java.io.IOException;
+
 /**
  * @author alewu
  * @date 2017/11/4 8:23
@@ -13,28 +14,21 @@ import java.io.IOException;
  */
 public class FreeMarkerTemplateUtils {
 
-    /** 通过Freemarker的Configuration读取相应的ftl **/
+    /**
+     * 通过Freemarker的Configuration读取相应的ftl
+     **/
     private static final Configuration CONFIGURATION = new Configuration(Configuration.VERSION_2_3_26);
 
-    static{
-        System.out.println(FreeMarkerTemplateUtils.class.getClassLoader().getResource("").getPath());
-        System.out.println(FreeMarkerTemplateUtils.class.getResource("").getPath());
-        System.out.println(FreeMarkerTemplateUtils.class.getResource("/").getPath());
-        CONFIGURATION.setClassForTemplateLoading(FreeMarkerTemplateUtils.class, "/com/koko/crud/util/freemarker/template");
+    static {
+        CONFIGURATION.setClassForTemplateLoading(FreeMarkerTemplateUtils.class, "/template");
         CONFIGURATION.setDefaultEncoding("UTF-8");
         CONFIGURATION.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);
         CONFIGURATION.setCacheStorage(NullCacheStorage.INSTANCE);
     }
 
 
-    public static Template getTemplate(String templateName) {
-        try {
-            return CONFIGURATION.getTemplate(templateName);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return null;
-
+    public static Template getTemplate(String template) throws IOException {
+        return CONFIGURATION.getTemplate(template);
     }
 
     public static void clearCache() {

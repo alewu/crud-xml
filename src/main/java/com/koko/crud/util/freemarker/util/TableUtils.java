@@ -1,44 +1,49 @@
 package com.koko.crud.util.freemarker.util;
 
 
+import com.fasterxml.jackson.core.util.VersionUtil;
 import com.koko.crud.util.freemarker.bean.Field;
 import com.koko.crud.util.freemarker.bean.TableMetaData;
 import org.springframework.util.StringUtils;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.*;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Properties;
 
 
 public class TableUtils {
     public static final String TABLE = "table";
     public static final String FILED = "filed";
 
-
     private static final String REGEX = "_";
+    private static final String URL;
+    private static final String USER;
+    private static final String PASSWORD;
+    private static final String DRIVER;
 
-    private static final String URL = "jdbc:mysql://localhost:3306/mybatis?serverTimezone=UTC&characterEncoding=utf-8";
-    private static final String USER = "root";
-    private static final String PASSWORD = "root";
-    private static final String DRIVER = "com.mysql.jdbc.Driver";
+    static {
+        DRIVER = getParameter("jdbc.driverClass");
+        URL = getParameter("jdbc.url");
+        USER = getParameter("jdbc.username");
+        PASSWORD = getParameter("jdbc.password");
+    }
 
 
     public static Connection getConnection() {
         try {
             Class.forName(DRIVER);
-            Connection connection = DriverManager.getConnection(URL, USER, PASSWORD);
-            return connection;
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (SQLException e) {
+            return DriverManager.getConnection(URL, USER, PASSWORD);
+        } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
         }
         return null;
     }
 
     public static ResultSet getResultSet() {
-        try {
-            Connection connection = TableUtils.getConnection();
+        try (Connection connection = TableUtils.getConnection()) {
             DatabaseMetaData databaseMetaData = connection.getMetaData();
             return databaseMetaData.getColumns(null, "%", "%", "%");
         } catch (SQLException e) {
@@ -60,7 +65,7 @@ public class TableUtils {
             // 获取表名
             String tableName = rs.getString("TABLE_NAME");
             tableMetaData.setTableName(tableName);
-            tableMetaData.setEntityName(TableUtils.processName(tableName,TableUtils.TABLE));
+            tableMetaData.setEntityName(TableUtils.processName(tableName, TableUtils.TABLE));
             // 根据表名提取表里面信息
             ResultSet colRS = dbMetData.getColumns(null, "%", tableName, "%");
             List<Field> fields = new LinkedList<>();
@@ -70,7 +75,7 @@ public class TableUtils {
                 String typeName = colRS.getString("TYPE_NAME");
                 String remarks = colRS.getString("REMARKS");
                 field.setColumnName(columnName);
-                field.setMemberVariable(TableUtils.processName(columnName,FILED));
+                field.setMemberVariable(TableUtils.processName(columnName, FILED));
                 field.setTypeName(typeName);
                 field.setRemarks(remarks);
                 fields.add(field);
@@ -97,5 +102,16 @@ public class TableUtils {
             return sb.toString();
         }
         return null;
+    }
+
+    public static String getParameter(String key) {
+        Properties prop = new Properties();
+        InputStream in = VersionUtil.class.getClassLoader().getResourceAsStream("jdbc.properties");
+        try {
+            prop.load(in);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return prop.getProperty(key).trim();
     }
 }
