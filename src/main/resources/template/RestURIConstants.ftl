@@ -7,7 +7,7 @@ package ${packageName}.constants;
 <#if tableMetaDatas ?? >
 public class RestURIConstants {
 
-    public static final String APP_PREFIX  = "/web";
+    public static final String APP_PREFIX  = "${appPrefix}";
     <#list tableMetaDatas>
     <#items as tableMetaData>
     public static final String ${tableMetaData.entityName?upper_case}S = "/${tableMetaData.entityName?uncap_first}s";

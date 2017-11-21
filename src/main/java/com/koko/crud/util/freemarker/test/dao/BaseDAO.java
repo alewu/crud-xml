@@ -3,7 +3,7 @@ package com.koko.crud.util.freemarker.test.dao;
 
 /**
  * @author alewu
- * @date 2017-11-16
+ * @date 2017-11-21
  * @description 基础接口
  */
 public interface BaseDAO<T> {

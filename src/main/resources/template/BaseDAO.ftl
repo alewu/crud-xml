@@ -1,11 +1,12 @@
-package com.koko.crud.util.freemarker.test.service;
+package ${packageName}.dao;
+
 
 /**
- * @author alewu
- * @date 2017-11-21
+ * @author ${author}
+ * @date ${date}
  * @description 基础接口
  */
-public interface BaseService<T> {
+public interface BaseDAO<T> {
 
     int insertOne(T t);
 

@@ -1,7 +1,7 @@
 package com.koko.crud.util.freemarker.test.constants;
 /**
  * @author alewu
- * @date 2017-11-16
+ * @date 2017-11-21
  * @description  RestURIConstants 常量类
  */
 public class RestURIConstants {
