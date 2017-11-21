@@ -12,6 +12,9 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,9 +23,8 @@ import static com.koko.crud.util.freemarker.bean.SuffixConstants.*;
 
 public class FreeMarkerDemo {
     private static final String AUTHOR = "alewu";
-    private static final String CURRENT_DATE = "2017-11-21";
-    private static final String PACKAGE_NAME = "com.koko.crud.util.freemarker.test";
-    private static final String TEMPLATE_PATH = "F:\\java\\eclipseworkspace\\my-project\\crud\\src\\main\\java\\com\\koko\\crud\\util\\freemarker\\test\\";
+    private static final String PACKAGE_NAME = getBasePackagePath(FreeMarkerDemo.class) + "util.freemarker.test";
+    private static final String TEMPLATE_PATH = getAbsolutePackagePath(FreeMarkerDemo.class) + "\\util\\freemarker\\test\\";
 
     private static final String SERVICE = "service";
     private static final String IMPL = "impl";
@@ -42,26 +44,50 @@ public class FreeMarkerDemo {
     private static final String TEMPLATE_SUFFIX = FREEMARKER;
     private static final String MAPPER_SUFFIX = XML;
     // Controller层类级别匹配
-    public static final String APP_PREFIX = "/web";
+    private static final String APP_PREFIX = "/web";
 
-    private ResultSet resultSet = TableUtils.getResultSet();
+    private ResultSet resultSet;
+
+    private static String currentDate;
+
+
+    public static String getAbsolutePackagePath(Class clazz) {
+        String pathStr = clazz.getResource("").getPath()
+                .replaceFirst("/", "")
+                .replace("target/classes", "src/main/java")
+                .replace("/util/freemarker", "");
+        System.out.println(pathStr);
+        return pathStr;
+    }
+
+    public static String getBasePackagePath(Class clazz) {
+        String pathStr = getAbsolutePackagePath(clazz);
+        String[] subPaths = pathStr.split("/src/main/java/");
+        return subPaths[1].replace("/", ".");
+    }
 
 
     public static void main(String[] args) throws Exception {
         Long start = System.currentTimeMillis();
-        String path = FreeMarkerDemo.class.getResource("").getPath().replaceFirst("/", "").replace("target/classes", "src/main/java").replace("/util/freemarker", "");
-
-        System.out.println(path);
-
 
         FreeMarkerDemo freeMarkerDemo = new FreeMarkerDemo();
         freeMarkerDemo.generate();
 
         Long end = System.currentTimeMillis();
+
         System.out.println("finished!!!" + "\n\rtime >> " + (end - start) + " ms");
     }
 
+    private void init() throws ClassNotFoundException, SQLException {
+        Date nowDate = new Date();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        currentDate = sdf.format(nowDate);
+        // 获取结果集
+        resultSet = TableUtils.getResultSet();
+    }
+
     public void generate() throws Exception {
+        init();
         List<TableMetaData> tableMetaDatas;
         try {
             tableMetaDatas = TableUtils.getTableMetaData();
@@ -189,7 +215,7 @@ public class FreeMarkerDemo {
         Template template = FreeMarkerTemplateUtils.getTemplate(templateName + TEMPLATE_SUFFIX);
         dataMap.put("packageName", PACKAGE_NAME);
         dataMap.put("author", AUTHOR);
-        dataMap.put("date", CURRENT_DATE);
+        dataMap.put("date", currentDate);
         Writer out = Files.newBufferedWriter(path, StandardCharsets.UTF_8);
         template.process(dataMap, out);
 
