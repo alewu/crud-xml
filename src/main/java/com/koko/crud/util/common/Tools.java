@@ -1,236 +1,106 @@
 package com.koko.crud.util.common;
 
-import org.springframework.util.StringUtils;
-
-import java.io.*;
 import java.math.BigDecimal;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Random;
+import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-
+/**
+ * @author alewu
+ * @date 2017/11/13 21:56
+ * @description 常用工具类
+ */
 public class Tools {
 
-	/**
-	 * 随机生成六位数验证码
-	 * 
-	 * @return
-	 */
-	public static int getRandomNum() {
-		Random r = new Random();
-		return r.nextInt(900000) + 100000;
-	}
+    private static final String ID_REGEX = "^\\d{15}|\\d{18}$";
 
-	/**
-	 * 按照yyyy-MM-dd HH:mm:ss的格式，日期转字符串
-	 * 
-	 * @param date
-	 * @return yyyy-MM-dd HH:mm:ss
-	 */
-	public static String date2Str(Date date) {
-		return date2Str(date, "yyyy-MM-dd HH:mm:ss");
-	}
+    private static final String EMAIL_REGEX = "^\\w+([-+.]\\w+)*@\\w+([-.]\\w+)*\\.\\w+([-.]\\w+)*$";
 
-	/**
-	 * 按照yyyy-MM-dd HH:mm:ss的格式，字符串转日期
-	 * 
-	 * @param date
-	 * @return
-	 */
-	public static Date str2Date(String date) {
-		if (!StringUtils.isEmpty(date)) {
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-			try {
-				return sdf.parse(date);
-			} catch (ParseException e) {
-				e.printStackTrace();
-			}
-			return new Date();
-		} else {
-			return null;
-		}
-	}
-
-	/**
-	 * 按照参数format的格式，日期转字符串
-	 * 
-	 * @param date
-	 * @param format
-	 * @return
-	 */
-	public static String date2Str(Date date, String format) {
-		if (date != null) {
-			SimpleDateFormat sdf = new SimpleDateFormat(format);
-			return sdf.format(date);
-		} else {
-			return "";
-		}
-	}
-
-	/**
-	 * 把时间根据时、分、秒转换为时间段
-	 * 
-	 * @param StrDate
-	 */
-	public static String getTimes(String StrDate) {
-		String resultTimes = "";
-
-		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		Date now;
-
-		try {
-			now = new Date();
-			Date date = df.parse(StrDate);
-			long times = now.getTime() - date.getTime();
-			long day = times / (24 * 60 * 60 * 1000);
-			long hour = (times / (60 * 60 * 1000) - day * 24);
-			long min = ((times / (60 * 1000)) - day * 24 * 60 - hour * 60);
-			long sec = (times / 1000 - day * 24 * 60 * 60 - hour * 60 * 60 - min * 60);
-
-			StringBuffer sb = new StringBuffer();
-			// sb.append("发表于：");
-			if (hour > 0) {
-				sb.append(hour + "小时前");
-			} else if (min > 0) {
-				sb.append(min + "分钟前");
-			} else {
-				sb.append(sec + "秒前");
-			}
-
-			resultTimes = sb.toString();
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
-
-		return resultTimes;
-	}
-
-	/**
-	 * 写txt里的单行内容
-	 * 
-	 * @param filePath
-	 *            文件路径
-	 * @param content
-	 *            写入的内容
-	 */
-	public static void writeFile(String filePath, String content) {
-		// String filePath =
-		// String.valueOf(Thread.currentThread().getContextClassLoader().getResource(""))+"../../";
-		// //项目路径
-		String path = filePath.trim();
-		if (path.indexOf(":") != 1) {
-			path = File.separator + path;
-		}
-		try {
-			OutputStreamWriter write = new OutputStreamWriter(new FileOutputStream(path), "utf-8");
-			BufferedWriter writer = new BufferedWriter(write);
-			writer.write(content);
-			writer.close();
-
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-
-	/**
-	 * 验证邮箱
-	 * 
-	 * @param email
-	 * @return
-	 */
-	public static boolean checkEmail(String email) {
-		boolean flag = false;
-		try {
-			String check = "^([a-z0-9A-Z]+[-|_|\\.]?)+[a-z0-9A-Z]@([a-z0-9A-Z]+(-[a-z0-9A-Z]+)?\\.)+[a-zA-Z]{2,}$";
-			Pattern regex = Pattern.compile(check);
-			Matcher matcher = regex.matcher(email);
-			flag = matcher.matches();
-		} catch (Exception e) {
-			flag = false;
-		}
-		return flag;
-	}
-
-	/**
-	 * 验证手机号码
-	 * 
-	 * @param phoneNumber
-	 * @return
-	 */
-	public static boolean checkPhoneNumber(String phoneNumber) {
-		boolean flag = false;
-		try {
-			Pattern regex = Pattern
-					.compile("^(((13[0-9])|(15([0-3]|[5-9]))|(18[0,5-9]))\\d{8})|(0\\d{2}-\\d{8})|(0\\d{3}-\\d{7})$");
-			Matcher matcher = regex.matcher(phoneNumber);
-			flag = matcher.matches();
-		} catch (Exception e) {
-			flag = false;
-		}
-		return flag;
-	}
+    private static final String PHONE_REGEX = "^((13[0-9])|(14[5|7])|(15([0-3]|[5-9]))|(18[0,5-9]))\\\\d{8}$";
 
 
-	/**
-	 * 读取txt里的单行内容
-	 * 
-	 * @param filePath
-	 *            文件路径
-	 */
-	public static String readTxtFile(String filePath) {
-		try {
-			// String filePath =
-			// String.valueOf(Thread.currentThread().getContextClassLoader().getResource(""))+"../../";
-			// //项目路径
-			// filePath = filePath.replaceAll("file:/", "");
-			// filePath = filePath.replaceAll("%20", " ");
-			// filePath = filePath.trim() + fileP.trim();
-			String path = filePath.trim();
-			if (path.indexOf(":") != 1) {
-				path = File.separator + path;
-			}
-			String encoding = "utf-8";
-			File file = new File(path);
-			if (file.isFile() && file.exists()) { // 判断文件是否存在
-				InputStreamReader read = new InputStreamReader(
-						new FileInputStream(file), encoding); // 考虑到编码格式
-				BufferedReader bufferedReader = new BufferedReader(read);
-				String lineTxt = null;
-				while ((lineTxt = bufferedReader.readLine()) != null) {
-					return lineTxt;
-				}
-				read.close();
-			} else {
-				System.out.println("找不到指定的文件,查看此路径是否正确:" + path);
-			}
-		} catch (Exception e) {
-			System.out.println("读取文件内容出错");
-		}
-		return "";
-	}
+    /**
+     * 随机生成四位数验证码
+     *
+     * @return
+     */
+    public static int getRandomNum() {
+        Random r = new Random();
+        return r.nextInt(900000) + 100000;// (Math.random()*(999999-100000)+100000)
+    }
 
-	public static void main(String[] args) {
-		String readTxtFile = readTxtFile("D:\\apache-tomcat-7.0.62\\webapps\\wks\\admin/EMAIL.txt");
-		System.out.println(readTxtFile);
-		writeFile("D:\\apache-tomcat-7.0.62\\webapps\\wks\\admin/EMAIL.txt",
-				"试试事实");
-	}
+    /**
+     * 验证身份证
+     *
+     * @param identityCard 身份证
+     * @return
+     */
+    public static boolean checkIdentityCard(String identityCard) {
+        return check(ID_REGEX, identityCard);
+    }
 
-	public static String getPrintSize(long size) {
-		BigDecimal filesize = new BigDecimal(size);
-		BigDecimal megabyte = new BigDecimal(1024 * 1024);
-		float returnValue = filesize.divide(megabyte, 2, BigDecimal.ROUND_UP)
-				.floatValue();
-		if (returnValue > 1) {
+    /**
+     * 验证邮箱
+     *
+     * @param email 邮箱
+     * @return 布尔值
+     */
+    public static boolean checkEmail(String email) {
+        return check(EMAIL_REGEX, email);
+    }
+
+    /**
+     * 验证手机号码
+     *
+     * @param phoneNumber 手机号码
+     * @return 布尔值
+     */
+    public static boolean checkPhoneNumber(String phoneNumber) {
+        return check(PHONE_REGEX, phoneNumber);
+    }
+
+    public static boolean check(String regex, String target) {
+        boolean flag;
+        try {
+            Pattern pattern = Pattern.compile(regex);
+            Matcher matcher = pattern.matcher(target);
+            flag = matcher.matches();
+        } catch (Exception e) {
+            flag = false;
+        }
+        return flag;
+    }
+
+
+    public static void main(String[] args) {
+        System.out.println(checkEmail("z1@werecom"));
+        System.out.println(Tools.generateUUID());
+        System.out.println();
+    }
+
+    public static String generateUUID() {
+        return UUID.randomUUID().toString().replace("-", "");
+    }
+
+    public static String getPrintSize(long size) {
+        BigDecimal fileSize = new BigDecimal(size);
+        BigDecimal megabyte = new BigDecimal(1024 * 1024);
+        float returnValue = fileSize.divide(megabyte, 2, BigDecimal.ROUND_UP)
+                .floatValue();
+        if (returnValue > 1) {
             return (returnValue + "MB");
         }
-		BigDecimal kilobyte = new BigDecimal(1024);
-		returnValue = filesize.divide(kilobyte, 2, BigDecimal.ROUND_UP)
-				.floatValue();
-		return (returnValue + "KB");
-	}
+        BigDecimal kilobyte = new BigDecimal(1024);
+        returnValue = fileSize.divide(kilobyte, 2, BigDecimal.ROUND_UP)
+                .floatValue();
+        return (returnValue + "KB");
+    }
 
+
+    public static String toUpperFirstChar(String str) {
+        char[] charArray = str.toCharArray();
+        charArray[0] -= 32;
+        return String.valueOf(charArray);
+    }
 }

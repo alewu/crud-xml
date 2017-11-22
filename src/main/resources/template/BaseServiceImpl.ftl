@@ -15,13 +15,13 @@ public class BaseServiceImpl<T> implements BaseService<T>{
     private BaseDAO baseDAO;
 
     @Override
-    public int insertOne(T t) {
-        return baseDAO.insertOne(t);
+    public int saveOne(T t) {
+        return baseDAO.saveOne(t);
     }
 
     @Override
-    public int deleteOne(String id) {
-    return baseDAO.deleteOne(id);
+    public int removeOne(String id) {
+    return baseDAO.removeOne(id);
     }
 
     @Override

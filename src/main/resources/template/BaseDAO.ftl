@@ -8,9 +8,9 @@ package ${packageName}.dao;
  */
 public interface BaseDAO<T> {
 
-    int insertOne(T t);
+    int saveOne(T t);
 
-    int deleteOne(String id);
+    int removeOne(String id);
 
     int updateOne(T t);
 
