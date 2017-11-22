@@ -1,5 +1,5 @@
 <#if tableMetaData??>
-<#assign fields=tableMetaData.fields>
+<#assign customFields=tableMetaData.customFields>
 <#assign entityName=tableMetaData.entityName>
 package ${packageName}.controller;
 
@@ -35,7 +35,7 @@ public class ${entityName}Controller {
         ${entityName?uncap_first}Service.insertOne(${entityName?uncap_first});
         return Response.success();
     }
-    <#if !( fields[2].columnName ? ends_with("_id") && fields[3].columnName == "gmt_create" ) >
+    <#if !( customFields[2].columnName ? ends_with("_id") && customFields[3].columnName == "gmt_create" ) >
 
     /**
      * @author ${author}

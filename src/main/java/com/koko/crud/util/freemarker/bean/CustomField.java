@@ -7,7 +7,7 @@ import lombok.Data;
  * @description 数据库字段封装类
  */
 @Data
-public class Field {
+public class CustomField {
     /* 数据库字段名称 */
     private String columnName;
     /* 数据库字段名对应的实体类成员变量名 */
