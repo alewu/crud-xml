@@ -31,32 +31,11 @@ public class ${entityName}Controller {
      * @description 增加单个${entityName}
      */
     @PostMapping(${entityName?upper_case}S)
-    public Response insertOne(${entityName} ${entityName?uncap_first}){
+    public Response save${entityName}(${entityName} ${entityName?uncap_first}){
         ${entityName?uncap_first}Service.insertOne(${entityName?uncap_first});
         return Response.success();
     }
     <#if !( fields[2].columnName ? ends_with("_id") && fields[3].columnName == "gmt_create" ) >
-    /**
-     * @author ${author}
-     * @date ${date}
-     * @description 删除单个${entityName}
-     */
-    @DeleteMapping(${entityName?upper_case}_ID)
-    public Response deleteOne(@PathVariable String ${entityName?uncap_first}Id){
-        ${entityName?uncap_first}Service.deleteOne(${entityName?uncap_first}Id);
-        return Response.success();
-    }
-
-    /**
-     * @author ${author}
-     * @date ${date}
-     * @description 更新单个${entityName}
-     */
-    @PutMapping(${entityName?upper_case}_ID)
-    public Response updateOne(@PathVariable String ${entityName?uncap_first}Id,${entityName} ${entityName?uncap_first}){
-        int m = ${entityName?uncap_first}Service.updateOne(${entityName?uncap_first});
-        return Response.success();
-    }
 
     /**
      * @author ${author}
@@ -64,7 +43,7 @@ public class ${entityName}Controller {
      * @description 查询单个${entityName}
      */
     @GetMapping(${entityName?upper_case}_ID)
-    public Response getOne(@PathVariable String ${entityName?uncap_first}Id){
+    public Response get${entityName}(@PathVariable String ${entityName?uncap_first}Id){
         ${entityName} ${entityName?uncap_first} = ${entityName?uncap_first}Service.getOne(${entityName?uncap_first}Id);
         return Response.success().put("${entityName?uncap_first}", ${entityName?uncap_first});
     }
@@ -78,6 +57,28 @@ public class ${entityName}Controller {
     public Response list${entityName}(PageParams pageParams){
         PageBean<${entityName}> pageBean = ${entityName?uncap_first}Service.list${entityName}(pageParams);
         return Response.success().put("pageBean", pageBean);
+    }
+
+    /**
+     * @author ${author}
+     * @date ${date}
+     * @description 更新单个${entityName}
+    */
+    @PutMapping(${entityName?upper_case}_ID)
+    public Response update${entityName}(@PathVariable String ${entityName?uncap_first}Id,${entityName} ${entityName?uncap_first}){
+        ${entityName?uncap_first}Service.updateOne(${entityName?uncap_first});
+        return Response.success();
+    }
+
+    /**
+     * @author ${author}
+     * @date ${date}
+     * @description 删除单个${entityName}
+     */
+    @DeleteMapping(${entityName?upper_case}_ID)
+    public Response remove${entityName}(@PathVariable String ${entityName?uncap_first}Id){
+        ${entityName?uncap_first}Service.deleteOne(${entityName?uncap_first}Id);
+        return Response.success();
     }
     </#if>
 }

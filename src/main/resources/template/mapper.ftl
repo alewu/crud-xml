@@ -30,7 +30,7 @@
     </#list>
 
     <#list fields>
-    <insert id="insertOne" parameterType="${packageName}.entity.${entityName}">
+    <insert id="saveOne" parameterType="${packageName}.entity.${entityName}">
         INSERT INTO ${tableName}
         <trim prefix="(" suffix=")" suffixOverrides=",">
         <#items as field>
@@ -63,7 +63,7 @@
     </#list>
     </insert>
 
-    <delete id="deleteOne" parameterType="java.lang.Integer">
+    <delete id="removeOne" parameterType="java.lang.Integer">
         DELETE FROM ${tableName}
         WHERE ${fields[0].columnName} = ${r'#{'}${fields[0].memberVariable}${r'}'}
     </delete>

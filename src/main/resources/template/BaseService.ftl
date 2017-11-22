@@ -7,9 +7,9 @@ package ${packageName}.service;
  */
 public interface BaseService<T> {
 
-    int insertOne(T t);
+    int saveOne(T t);
 
-    int deleteOne(String id);
+    int removeOne(String id);
 
     int updateOne(T t);
 
