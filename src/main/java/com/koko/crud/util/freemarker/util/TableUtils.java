@@ -1,7 +1,6 @@
 package com.koko.crud.util.freemarker.util;
 
 
-import com.fasterxml.jackson.core.util.VersionUtil;
 import com.koko.crud.util.freemarker.bean.CustomField;
 import com.koko.crud.util.freemarker.bean.TableMetaData;
 import org.springframework.util.StringUtils;
@@ -106,7 +105,7 @@ public class TableUtils {
 
     public static String getParameter(String key) {
         Properties prop = new Properties();
-        InputStream in = VersionUtil.class.getClassLoader().getResourceAsStream("jdbc.properties");
+        InputStream in = TableUtils.class.getClassLoader().getResourceAsStream("jdbc.properties");
         try {
             prop.load(in);
         } catch (IOException e) {
