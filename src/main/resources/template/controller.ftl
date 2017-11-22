@@ -32,7 +32,7 @@ public class ${entityName}Controller {
      */
     @PostMapping(${entityName?upper_case}S)
     public Response save${entityName}(${entityName} ${entityName?uncap_first}){
-        ${entityName?uncap_first}Service.insertOne(${entityName?uncap_first});
+        ${entityName?uncap_first}Service.saveOne(${entityName?uncap_first});
         return Response.success();
     }
     <#if !( customFields[2].columnName ? ends_with("_id") && customFields[3].columnName == "gmt_create" ) >
@@ -77,7 +77,7 @@ public class ${entityName}Controller {
      */
     @DeleteMapping(${entityName?upper_case}_ID)
     public Response remove${entityName}(@PathVariable String ${entityName?uncap_first}Id){
-        ${entityName?uncap_first}Service.deleteOne(${entityName?uncap_first}Id);
+        ${entityName?uncap_first}Service.removeOne(${entityName?uncap_first}Id);
         return Response.success();
     }
     </#if>

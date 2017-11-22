@@ -42,7 +42,7 @@ public class FreeMarkerDemo {
     private static final String TEMPLATE_SUFFIX = FREEMARKER;
     private static final String MAPPER_SUFFIX = XML;
     // Controller层类级别匹配
-    private static final String APP_PREFIX = "/web";
+    private static final String APP_PREFIX = "/api/v1";
     // 结果集
     private ResultSet resultSet;
 
@@ -78,7 +78,6 @@ public class FreeMarkerDemo {
                 .replaceFirst("/", "")
                 .replace("target/classes", "src/main/java")
                 .replace("/util/freemarker", "");
-        System.out.println(pathStr);
         return pathStr;
     }
 
