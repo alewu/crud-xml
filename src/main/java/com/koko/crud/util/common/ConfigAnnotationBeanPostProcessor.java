@@ -29,7 +29,7 @@ public class ConfigAnnotationBeanPostProcessor extends InstantiationAwareBeanPos
 				PropertyConfig cfg = field.getAnnotation(PropertyConfig.class);
 				if (cfg != null) {
 					if (Modifier.isStatic(field.getModifiers())) {
-						throw new IllegalStateException("@PropertyConfig annotation is not supported on static fields");
+						throw new IllegalStateException("@PropertyConfig annotation is not supported on static customFields");
 					}
 					String key = cfg.value().length() <= 0 ? field.getName() : cfg.value();
 					Object value = propertyConfigurer.getProperty(key);

@@ -1,5 +1,5 @@
 <#if tableMetaData ?? >
-<#assign fields=tableMetaData.fields>
+<#assign customFields=tableMetaData.customFields>
 <#assign entityName=tableMetaData.entityName>
 package ${packageName}.entity;
 
@@ -14,32 +14,32 @@ import lombok.Data;
 @Data
 @SuppressWarnings("serial")
 public class ${entityName} extends BaseEntity implements Serializable {
-    <#list fields as field>
-    <#if !(field.memberVariable ? starts_with("gmt"))>
-    /** ${field.remarks!} **/
-    <#if field.typeName = 'BIT' >
-    private Boolean ${field.memberVariable};
+    <#list customFields as customField>
+    <#if !(customField.memberVariable ? starts_with("gmt"))>
+    /** ${customField.remarks!} **/
+    <#if customField.typeName = 'BIT' >
+    private Boolean ${customField.memberVariable};
     </#if>
-    <#if field.typeName = 'INT' || field.typeName = 'TINYINT' ||  field.typeName = 'SMALLINT'>
-    private Integer ${field.memberVariable};
+    <#if customField.typeName = 'INT' || customField.typeName = 'TINYINT' ||  customField.typeName = 'SMALLINT'>
+    private Integer ${customField.memberVariable};
     </#if>
-    <#if field.typeName = 'BIGINT' >
-    private Long ${field.memberVariable};
+    <#if customField.typeName = 'BIGINT' >
+    private Long ${customField.memberVariable};
     </#if>
-    <#if field.typeName = 'DOUBLE' >
-    private Double ${field.memberVariable};
+    <#if customField.typeName = 'DOUBLE' >
+    private Double ${customField.memberVariable};
     </#if>
-    <#if field.typeName = 'DECIMAL' >
-    private Decimal ${field.memberVariable};
+    <#if customField.typeName = 'DECIMAL' >
+    private Decimal ${customField.memberVariable};
     </#if>
-    <#if field.typeName = 'CHAR' || field.typeName = 'VARCHAR' || field.typeName = 'TEXT' >
-    private String ${field.memberVariable};
+    <#if customField.typeName = 'CHAR' || customField.typeName = 'VARCHAR' || customField.typeName = 'TEXT' >
+    private String ${customField.memberVariable};
     </#if>
-    <#if field.typeName = 'BLOB' >
-    private byte[] ${field.memberVariable};
+    <#if customField.typeName = 'BLOB' >
+    private byte[] ${customField.memberVariable};
     </#if>
-    <#if field.typeName = 'DATETIME' || field.typeName = 'TIMESTAMP' || field.typeName = 'DATE'>
-    private Date ${field.memberVariable};
+    <#if customField.typeName = 'DATETIME' || customField.typeName = 'TIMESTAMP' || customField.typeName = 'DATE'>
+    private Date ${customField.memberVariable};
     </#if>
     </#if>
     </#list>

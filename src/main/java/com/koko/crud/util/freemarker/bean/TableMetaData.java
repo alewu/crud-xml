@@ -11,6 +11,6 @@ public class TableMetaData {
     /** 数据库表名对应的实体类名 **/
     private String entityName;
     /** 列对象 **/
-    private List<Field> fields;
+    private List<CustomField> customFields;
 
 }

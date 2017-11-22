@@ -2,7 +2,7 @@ package com.koko.crud.util.freemarker.util;
 
 
 import com.fasterxml.jackson.core.util.VersionUtil;
-import com.koko.crud.util.freemarker.bean.Field;
+import com.koko.crud.util.freemarker.bean.CustomField;
 import com.koko.crud.util.freemarker.bean.TableMetaData;
 import org.springframework.util.StringUtils;
 
@@ -55,7 +55,7 @@ public class TableUtils {
 
     public static List<TableMetaData> getTableMetaData() throws SQLException {
         TableMetaData tableMetaData = null;
-        Field field = null;
+        CustomField customField = null;
         Connection connection = TableUtils.getConnection();
         DatabaseMetaData dbMetData = connection.getMetaData();
         ResultSet rs = dbMetData.getTables(null, "%", "%", new String[]{"TABLE"});
@@ -68,19 +68,19 @@ public class TableUtils {
             tableMetaData.setEntityName(TableUtils.processName(tableName, TableUtils.TABLE));
             // 根据表名提取表里面信息
             ResultSet colRS = dbMetData.getColumns(null, "%", tableName, "%");
-            List<Field> fields = new LinkedList<>();
+            List<CustomField> customFields = new LinkedList<>();
             while (colRS.next()) {
-                field = new Field();
+                customField = new CustomField();
                 String columnName = colRS.getString("COLUMN_NAME");
                 String typeName = colRS.getString("TYPE_NAME");
                 String remarks = colRS.getString("REMARKS");
-                field.setColumnName(columnName);
-                field.setMemberVariable(TableUtils.processName(columnName, FILED));
-                field.setTypeName(typeName);
-                field.setRemarks(remarks);
-                fields.add(field);
+                customField.setColumnName(columnName);
+                customField.setMemberVariable(TableUtils.processName(columnName, FILED));
+                customField.setTypeName(typeName);
+                customField.setRemarks(remarks);
+                customFields.add(customField);
             }
-            tableMetaData.setFields(fields);
+            tableMetaData.setCustomFields(customFields);
             tableMetaDatas.add(tableMetaData);
         }
         return tableMetaDatas;
