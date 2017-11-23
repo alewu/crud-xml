@@ -21,12 +21,16 @@ public class ${entityName}ServiceImpl extends BaseServiceImpl<${entityName}> imp
 
     @Override
     public PageBean<${entityName}> list${entityName}(PageParams pageParams) {
-        // TODO
         Integer offset = pageParams.getOffset() == null ? 0 : pageParams.getOffset();
         Integer limit = pageParams.getLimit() == null ? 20 : pageParams.getLimit();
         PageHelper.startPage(offset, limit);
         List<${entityName}> list = ${entityName ? uncap_first}DAO.list${entityName}();
-        return new PageBean<>(list);
+        PageInfo<${entityName}> pageInfo = new PageInfo<>(list);
+        PageBean<${entityName}> pageBean = new PageBean<>();
+        pageBean.setRecordCount(pageInfo.getTotal());
+        pageBean.setPageCount(pageInfo.getPages());
+        pageBean.setList(list);
+        return pageBean;
     }
 
 }
