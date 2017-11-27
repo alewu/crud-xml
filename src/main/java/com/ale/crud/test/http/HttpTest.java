@@ -12,12 +12,12 @@ import java.io.IOException;
 
 public class HttpTest {
     @Test
-    public void test(){
-        CloseableHttpClient  httpClient = HttpClients.createDefault();
-        HttpGet httpGet = new HttpGet("http://192.168.1.153:80/rent/app/landlord/bill/findWeBills?renterIds=1");
+    public void test() {
+        CloseableHttpClient httpClient = HttpClients.createDefault();
+        HttpGet httpGet = new HttpGet("http://www.baidu.com");
+
         try {
             CloseableHttpResponse response = httpClient.execute(httpGet);
-            System.out.println(response.getStatusLine());
             HttpEntity entity = response.getEntity();
             // do something useful with the response body
             // and ensure it is fully consumed
