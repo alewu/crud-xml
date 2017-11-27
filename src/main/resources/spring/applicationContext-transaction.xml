@@ -26,12 +26,16 @@
             <!--定义查询方法都是只读的 -->
             <tx:method name="query*" read-only="true"/>
             <tx:method name="find*" read-only="true"/>
+            <tx:method name="list*" read-only="true"/>
             <tx:method name="get*" read-only="true"/>
 
             <!-- 主库执行操作，事务传播行为定义为默认行为 -->
             <tx:method name="add*"/>
+            <tx:method name="save*"/>
+            <tx:method name="insert*"/>
             <tx:method name="update*"/>
             <tx:method name="delete*"/>
+            <tx:method name="remove*"/>
 
             <!--其他方法使用默认事务策略 -->
             <tx:method name="*" read-only="true"/>

@@ -1,6 +1,8 @@
 package com.ale.crud.util.common;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 import java.util.UUID;
 import java.util.regex.Matcher;
@@ -76,6 +78,14 @@ public class Tools {
     public static void main(String[] args) {
         System.out.println(checkEmail("z1@werecom"));
         System.out.println(Tools.generateUUID());
+        List<Integer> list = new ArrayList<>();
+        for (int i = 0; i < 107; i++) {
+            list.add(i);
+        }
+        List<List<Integer>> lists = subList(list, 10);
+        for (List<Integer> integers : lists) {
+            System.out.println(integers.toArray());
+        }
         System.out.println();
     }
 
@@ -103,4 +113,31 @@ public class Tools {
         charArray[0] -= 32;
         return String.valueOf(charArray);
     }
+
+
+    public static <T> List<List<T>> subList(List<T> list, int blockSize) {
+        List<List<T>> lists = new ArrayList<List<T>>();
+        if (list != null && blockSize > 0) {
+            int listSize = list.size();
+            if (listSize <= blockSize) {
+                lists.add(list);
+                return lists;
+            }
+            int batchSize = listSize / blockSize;
+            int remain = listSize % blockSize;
+            for (int i = 0; i < batchSize; i++) {
+                int fromIndex = i * blockSize;
+                int toIndex = fromIndex + blockSize;
+                System.out.println("fromIndex=" + fromIndex + ", toIndex=" + toIndex);
+                lists.add(list.subList(fromIndex, toIndex));
+            }
+            if (remain > 0) {
+                System.out.println("fromIndex=" + (listSize - remain) + ", toIndex=" + (listSize));
+                lists.add(list.subList(listSize - remain, listSize));
+            }
+        }
+        return lists;
+    }
+
+
 }

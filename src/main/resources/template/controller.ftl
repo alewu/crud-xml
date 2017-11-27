@@ -64,8 +64,8 @@ public class ${entityName}Controller {
      * @date ${date}
      * @description 更新单个${entityName}
     */
-    @PutMapping(${entityName?upper_case}_ID)
-    public Response update${entityName}(@PathVariable String ${entityName?uncap_first}Id,${entityName} ${entityName?uncap_first}){
+    @PutMapping(${entityName?upper_case}S)
+    public Response update${entityName}(${entityName} ${entityName?uncap_first}){
         ${entityName?uncap_first}Service.updateOne(${entityName?uncap_first});
         return Response.success();
     }
