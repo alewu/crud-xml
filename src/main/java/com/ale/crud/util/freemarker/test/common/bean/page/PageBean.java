@@ -12,10 +12,10 @@ import java.util.List;
 public class PageBean<E> extends PageParams implements Serializable {
 
     /*总记录数*/
-    private int recordCount;
+    private Long recordCount;
 
     /*总页数*/
-   // private int pageCount;
+    private Integer pageCount;
 
     /*每页显示数据的集合*/
     private List<E> list;
@@ -24,4 +24,7 @@ public class PageBean<E> extends PageParams implements Serializable {
         this.list = list;
     }
 
+    public PageBean() {
+
+    }
 }

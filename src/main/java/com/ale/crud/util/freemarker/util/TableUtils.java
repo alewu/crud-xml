@@ -55,34 +55,37 @@ public class TableUtils {
     public static List<TableMetaData> getTableMetaData() throws SQLException {
         TableMetaData tableMetaData = null;
         CustomField customField = null;
-        Connection connection = TableUtils.getConnection();
-        DatabaseMetaData dbMetData = connection.getMetaData();
-        ResultSet rs = dbMetData.getTables(null, "%", "%", new String[]{"TABLE"});
-        List<TableMetaData> tableMetaDatas = new LinkedList<>();
-        while (rs.next()) {
-            tableMetaData = new TableMetaData();
-            // 获取表名
-            String tableName = rs.getString("TABLE_NAME");
-            tableMetaData.setTableName(tableName);
-            tableMetaData.setEntityName(TableUtils.processName(tableName, TableUtils.TABLE));
-            // 根据表名提取表里面信息
-            ResultSet colRS = dbMetData.getColumns(null, "%", tableName, "%");
-            List<CustomField> customFields = new LinkedList<>();
-            while (colRS.next()) {
-                customField = new CustomField();
-                String columnName = colRS.getString("COLUMN_NAME");
-                String typeName = colRS.getString("TYPE_NAME");
-                String remarks = colRS.getString("REMARKS");
-                customField.setColumnName(columnName);
-                customField.setMemberVariable(TableUtils.processName(columnName, FILED));
-                customField.setTypeName(typeName);
-                customField.setRemarks(remarks);
-                customFields.add(customField);
+        DatabaseMetaData dbMetData = null;
+        try (Connection connection = TableUtils.getConnection()) {
+            dbMetData = connection.getMetaData();
+            try (ResultSet rs = dbMetData.getTables(null, "%", "%", new String[]{"TABLE"})) {
+                List<TableMetaData> tableMetaDatas = new LinkedList<>();
+                while (rs.next()) {
+                    tableMetaData = new TableMetaData();
+                    // 获取表名
+                    String tableName = rs.getString("TABLE_NAME");
+                    tableMetaData.setTableName(tableName);
+                    tableMetaData.setEntityName(TableUtils.processName(tableName, TableUtils.TABLE));
+                    // 根据表名提取表里面信息
+                    ResultSet colRS = dbMetData.getColumns(null, "%", tableName, "%");
+                    List<CustomField> customFields = new LinkedList<>();
+                    while (colRS.next()) {
+                        customField = new CustomField();
+                        String columnName = colRS.getString("COLUMN_NAME");
+                        String typeName = colRS.getString("TYPE_NAME");
+                        String remarks = colRS.getString("REMARKS");
+                        customField.setColumnName(columnName);
+                        customField.setMemberVariable(TableUtils.processName(columnName, FILED));
+                        customField.setTypeName(typeName);
+                        customField.setRemarks(remarks);
+                        customFields.add(customField);
+                    }
+                    tableMetaData.setCustomFields(customFields);
+                    tableMetaDatas.add(tableMetaData);
+                }
+                return tableMetaDatas;
             }
-            tableMetaData.setCustomFields(customFields);
-            tableMetaDatas.add(tableMetaData);
         }
-        return tableMetaDatas;
     }
 
     public static String processName(String str, String target) {

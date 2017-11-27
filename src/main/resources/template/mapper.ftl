@@ -68,7 +68,7 @@
         WHERE ${customFields[0].columnName} = ${r'#{'}${customFields[0].memberVariable}${r'}'}
     </delete>
 
-<#if (customFields[3].columnName != "gmt_create") >
+<#if !(customFields[3].columnName == "gmt_create" && customFields[2].columnName ? ends_with("_id")) >
 <#list customFields>
     <update id="updateOne" parameterType="${packageName}.entity.${entityName}">
         UPDATE ${tableName}

@@ -1,6 +1,7 @@
-package ${packageName}.service.impl;
+package ${packageName}.serviceImpl;
 
 import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import ${packageName}.common.bean.page.PageBean;
 import ${packageName}.common.bean.page.PageParams;
 import ${packageName}.entity.${entityName};
