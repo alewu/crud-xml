@@ -43,7 +43,7 @@ public class ${entityName}Controller {
      * @description 查询单个${entityName}
      */
     @GetMapping(${entityName?upper_case}_ID)
-    public Response get${entityName}(@PathVariable String ${ent ityName?uncap_first}Id){
+    public Response get${entityName}(@PathVariable String ${entityName?uncap_first}Id){
         ${entityName} ${entityName?uncap_first} = ${entityName?uncap_first}Service.getOne(${entityName?uncap_first}Id);
         return Response.success().put("${entityName?uncap_first}", ${entityName?uncap_first});
     }
