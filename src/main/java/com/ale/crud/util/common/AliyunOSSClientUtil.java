@@ -50,7 +50,7 @@ public class AliyunOSSClientUtil {
      * @param files 上传的文件
      * @return 文件地址
      */
-    public static List<String> uploadFiles(MultipartFile[] files) {
+    public static List<String> upload(MultipartFile[] files) {
         List<String> urls = new LinkedList<>();
         for (MultipartFile file : files) {
             String url = uploadFileToOSS(file);

@@ -1,7 +1,5 @@
 package com.ale.crud.controller.advice;
 
-import com.ale.crud.exception.RRException;
-import com.ale.crud.exception.UnloginException;
 import com.ale.crud.util.common.R;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
