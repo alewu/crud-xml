@@ -14,14 +14,17 @@ import java.util.Map;
 public class MyResponse {
 
     /**
-     * 元数据
+     * 状态码
      **/
-    private Meta meta;
+    private Integer code;
 
     /**
      * 响应内容
      **/
     Map<String, Object> data = new HashMap<>();
+
+    public MyResponse() {
+    }
 
     //链式操作返回信息
     public MyResponse put(String key, Object value) {
@@ -29,75 +32,16 @@ public class MyResponse {
         return this;
     }
 
-    public static MyResponse success() {
-        MyResponse response = new MyResponse();
-        Meta meta = new Meta(true, 200);
-        response.setMeta(meta);
-        return response;
+    public static MyResponse ok() {
+        MyResponse myResponse = new MyResponse();
+        myResponse.setCode(200);
+        return myResponse;
     }
 
-    public static MyResponse failure(String message) {
-        MyResponse response = new MyResponse();
-        Meta meta = new Meta(false, message);
-        response.setMeta(meta);
-        return response;
-    }
-
-    public static MyResponse failure(Integer code, String message) {
-        MyResponse response = new MyResponse();
-        Meta meta = new Meta(false, code, message);
-        response.setMeta(meta);
-        return response;
-    }
-
-    /**
-     * Title: 请求元数据
-     *
-     * @author rico
-     * @created 2017年7月4日 下午5:08:12
-     */
-    private static class Meta {
-
-        private boolean success;
-        private Integer code;
-        private String message;
-
-        public Meta(boolean success, Integer code) {
-            this.success = success;
-            this.code = code;
-        }
-
-        public Meta(boolean success, String message) {
-            this.success = success;
-            this.message = message;
-        }
-
-        public Meta(boolean success, Integer code, String message) {
-            this.success = success;
-            this.code = code;
-            this.message = message;
-        }
-
-        public boolean isSuccess() {
-            return success;
-        }
-
-        public Integer getCode() {
-            return code;
-        }
-
-        public void setCode(Integer code) {
-            this.code = code;
-        }
-
-        public String getMessage() {
-            return message;
-        }
-
-        public void setMessage(String message) {
-            this.message = message;
-        }
-
+    public static MyResponse failed() {
+        MyResponse myResponse = new MyResponse();
+        myResponse.setCode(400);
+        return myResponse;
     }
 
 

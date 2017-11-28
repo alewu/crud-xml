@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration scan="true">
 
-    <!--控制台输出 -->
+    <!-- 控制台输出 -->
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <!-- encoders are assigned the type
          ch.qos.logback.classic.encoder.PatternLayoutEncoder by default -->
@@ -11,16 +11,67 @@
         </encoder>
     </appender>
 
+    <!-- 文件日志 -->
+
+    <!-- DEBUG信息输出 -->
+    <appender name="DEBUG" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>/logs/yzcx-debug.log</file>
+        <append>false</append>
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{5} - %msg%n</pattern>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>INFO</level>
+        </filter>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>/logs/yzcx-%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+    </appender>
+
+    <!-- INFO信息输出 -->
+    <appender name="INFO" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>/logs/yzcx-info.log</file>
+        <append>false</append>
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{5} - %msg%n</pattern>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>INFO</level>
+        </filter>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>/logs/yzcx-%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+    </appender>
+
+    <!-- ERROR信息输出 -->
+    <appender name="ERROR" class="ch.qos.logback.core.FileAppender">
+        <file>/logs/yzcx-error.log</file>
+        <!-- append: true,日志被追加到文件结尾; false,清空现存文件;默认是true -->
+        <append>true</append>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <!-- LevelFilter: 级别过滤器，根据日志级别进行过滤 -->
+            <level>ERROR</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <encoder>
+            <Pattern>[%d{yyyy-MM-dd HH:mm:ss.SSS}] [%5level] [%thread] %logger{0} %msg%n</Pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+
     <!-- logger start -->
 
     <!-- spring框架产生的warn级别日志 -->
-    <logger name="org.springframework" level="warn" additivity="false" />
-    <logger name="com.apache.mybatis" level="DEBUG" />
-    <logger name="java.sql.Connection" level="DEBUG" />
-    <logger name="java.sql.Statement" level="DEBUG" />
-    <logger name="java.sql.PreparedStatement" level="DEBUG" />
+    <logger name="org.springframework" level="WARN" additivity="false"/>
+    <!--<logger name="com.apache.mybatis" level="DEBUG" /> 没有产生效果 -->
+    <logger name="java.sql.Connection" level="DEBUG"/>
+    <logger name="java.sql.Statement" level="DEBUG"/>
+    <logger name="java.sql.PreparedStatement" level="DEBUG"/>
     <!-- 为某个包下的所有类的指定Appender. 也可以指定类名称 eg. com.aa.bb.ClassName -->
-    <logger name="com.sinsinet.billboard" >
+    <logger name="com.sinsinet.yzcx">
         <appender-ref ref="STDOUT"/>
     </logger>
     <logger name="com.sinsinet.controller" level="TRACE">
@@ -36,5 +87,8 @@
     <root level="DEBUG">
         <!-- 标识这个appender将会添加到这个logger -->
         <appender-ref ref="STDOUT"/>
+        <appender-ref ref="INFO"/>
+        <appender-ref ref="DEBUG"/>
+        <appender-ref ref="ERROR"/>
     </root>
 </configuration>
