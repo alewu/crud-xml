@@ -1,5 +1,8 @@
 package com.ale.crud.dao;
 
+import org.springframework.stereotype.Repository;
+
+@Repository
 public interface BaseDAO<T> {
 
     int insertOne(T t);

@@ -1,9 +1,8 @@
 package com.ale.crud.test;
 
 
-import com.ale.crud.bean.Dept;
 import com.ale.crud.bean.Emp;
-import com.ale.crud.dao.DeptMapper;
+import com.ale.crud.dao.DeptDAO;
 import com.ale.crud.dao.EmpMapper;
 import org.apache.ibatis.session.SqlSession;
 import org.junit.Test;
@@ -26,7 +25,7 @@ import java.util.UUID;
 @ContextConfiguration(locations = {"classpath:spring/applicationContext*.xml"})
 public class MapperTest {
     @Autowired
-    private DeptMapper deptMapper;
+    private DeptDAO deptDAO;
     @Autowired
     private EmpMapper empMapper;
     @Autowired
@@ -37,12 +36,12 @@ public class MapperTest {
         //1.创建springIoC容器
         ApplicationContext applicationContext = new ClassPathXmlApplicationContext("applicationContext.xml");
         //2.从spring中获取Mapper
-        DeptMapper deptBean = applicationContext.getBean(DeptMapper.class);
+        DeptDAO deptBean = applicationContext.getBean(DeptDAO.class);
         System.out.println(deptBean);
         //1.插入部门
 
-        deptMapper.insertSelective(new Dept(null,"开发部门"));
-        deptMapper.insertSelective(new Dept(null,"测试部门"));
+//        deptDAO.insertSelective(new Dept(null,"开发部门"));
+//        deptDAO.insertSelective(new Dept(null,"测试部门"));
 
         //2.插入员工
         empMapper.insertSelective(new Emp(null, 1, "jack", 12,"M",  "wyweiwei@163.com"));

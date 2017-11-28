@@ -46,7 +46,7 @@
     <aop:config>
         <!-- 定义切入点，所有的service的所有方法 -->
         <aop:pointcut id="txPointcut"
-                      expression="execution(* com.koko.crud.service.*.*(..))"/>
+                      expression="execution(* com.ale.crud.service.*.*(..))"/>
         <!-- 指明切入点， 应用事务策略到Service切面 -->
         <aop:advisor pointcut-ref="txPointcut" advice-ref="txAdvice"/>
     </aop:config>

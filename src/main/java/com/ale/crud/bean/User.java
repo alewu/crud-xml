@@ -3,6 +3,8 @@ package com.ale.crud.bean;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
+
 @Data
 @NoArgsConstructor
 public class User {
@@ -11,7 +13,9 @@ public class User {
     private String password;
     private Integer age;
     private String sex;
-    private String email;
+    private Date gmtCreate;
+    private Date gmtModified;
+
 
     public User(String username,String password){
         this.username = username;

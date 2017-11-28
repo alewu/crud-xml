@@ -1,18 +1,20 @@
 package com.ale.crud.controller;
 
+import com.ale.crud.bean.User;
 import com.ale.crud.common.response.Response;
 import com.ale.crud.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller
+@RestController
+@RequestMapping("/users")
 public class UserController {
     @Autowired
     private UserService userService;
-    @RequestMapping("/")
+    @RequestMapping("/id")
     public Response getUser(String id){
-        userService.getOne(id);
-        return new Response();
+        User user = userService.getOne(id);
+        return new Response().success(user);
     }
 }

@@ -1,6 +1,5 @@
 package com.ale.crud.controller;
 
-import com.ale.crud.common.page.PageBean;
 import com.ale.crud.bean.Dept;
 import com.ale.crud.common.page.PageParams;
 import com.ale.crud.common.response.Response;
@@ -21,8 +20,9 @@ public class DeptController {
     private DeptService deptService;
     @GetMapping(RestURIConstants.DEPT_ID)
     public Response getDept(@PathVariable Long deptId){
-        Dept dept = deptService.getDept(deptId);
-        return new Response().success(dept);
+        //Dept dept = deptService.getDept(deptId);
+       // return new Response().success(dept);
+        return new Response();
     }
 
     /**
@@ -32,7 +32,7 @@ public class DeptController {
      */
     @GetMapping(RestURIConstants.DEPTS)
     public Response listDept(PageParams pageParams){
-        PageBean<Dept> pageBean = deptService.listDept(pageParams);
+       // PageBean<Dept> pageBean = deptService.listDept(pageParams);
         return new Response().success();
     }
 
@@ -43,7 +43,7 @@ public class DeptController {
      */
     @PostMapping(RestURIConstants.DEPTS)
     public Response addDept(@RequestBody Dept dept){
-        deptService.addDept(dept);
+        //deptService.addDept(dept);
         return new Response().success(dept);
     }
 
@@ -65,7 +65,7 @@ public class DeptController {
      */
     @DeleteMapping(RestURIConstants.DEPT_ID)
     public Response deleteDept(@PathVariable Long deptId){
-        deptService.deleteDept(deptId);
+        //deptService.deleteDept(deptId);
         return new Response().success();
     }
 
@@ -89,7 +89,7 @@ public class DeptController {
      */
     @PutMapping(RestURIConstants.DEPT_ID)
     public Response updateDept(@PathVariable String deptId,Dept dept){
-        int m = deptService.updateDept(dept);
+       // int m = deptService.updateDept(dept);
         return new Response().success();
     }
 }
