@@ -11,12 +11,16 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class BaseServiceImpl<T> implements BaseService<T>{
-    @Autowired
-    private BaseDAO baseDAO;
+    private BaseDAO<T> baseDAO;
+
+    public void setBaseDAO(BaseDAO<T> baseDao) {
+        this.baseDAO = baseDao;
+    }
 
     @Override
-    public int saveOne(T t) {
-        return baseDAO.saveOne(t);
+    public T saveOne(T t) {
+        baseDAO.saveOne(t)
+        return t;
     }
 
     @Override
