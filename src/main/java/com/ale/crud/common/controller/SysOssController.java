@@ -22,7 +22,7 @@ public class SysOssController {
     @PostMapping("/files")
     public MyResponse upload(@RequestParam("files") MultipartFile[] files) throws Exception {
         if (files != null && files.length > 0) {
-            List<String> fileURLs = AliyunOSSClientUtil.uploadFiles(files);
+            List<String> fileURLs = AliyunOSSClientUtil.upload(files);
             return MyResponse.ok().put("fileURLs", fileURLs);
         }
         return MyResponse.failed();
