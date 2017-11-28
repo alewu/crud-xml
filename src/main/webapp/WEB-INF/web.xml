@@ -35,6 +35,14 @@
             <param-value>/WEB-INF/dispatcherServlet-servlet.xml</param-value>
         </init-param>
         <load-on-startup>1</load-on-startup>
+        <!-- 文件上传参数配置 -->
+        <multipart-config>
+            <location>/tmp/yzcx/uploads</location>
+            <!-- 文件的大小不超过2MB -->
+            <max-file-size>2097152</max-file-size>
+            <!--整个请求不超过4MB-->
+            <max-request-size>4194304</max-request-size>
+        </multipart-config>
     </servlet>
 
     <!-- Map all requests to the DispatcherServlet for handling -->
