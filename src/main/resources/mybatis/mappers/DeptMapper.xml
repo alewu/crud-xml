@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.ale.crud.dao.DeptMapper">
+<mapper namespace="com.ale.crud.dao.DeptDAO">
     <resultMap id="BaseResultMap" type="com.ale.crud.bean.Dept">
         <id column="dept_id" jdbcType="INTEGER" property="deptId"/>
         <result column="dept_name" jdbcType="VARCHAR" property="deptName"/>

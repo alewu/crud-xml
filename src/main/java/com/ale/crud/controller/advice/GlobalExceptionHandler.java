@@ -80,18 +80,5 @@ public class GlobalExceptionHandler {
     }
 
 
-    @ResponseStatus(HttpStatus.OK)
-    @ExceptionHandler(RRException.class)
-    public R signException(RRException ex) {
-        LOGGER.error(ex.getMsg());
-        return R.error(ex.getCode(), ex.getMsg());
-    }
-
-    @ResponseStatus(HttpStatus.UNAUTHORIZED)
-    @ExceptionHandler(UnloginException.class)
-    public R loginException(UnloginException ex) {
-        return R.error(HttpStatus.UNAUTHORIZED.value(), ex.getMsg());
-    }
-
 }
 

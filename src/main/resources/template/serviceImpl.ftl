@@ -1,4 +1,4 @@
-package ${packageName}.serviceImpl;
+package ${packageName}.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;

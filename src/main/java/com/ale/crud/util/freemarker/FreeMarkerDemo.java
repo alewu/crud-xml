@@ -65,7 +65,7 @@ public class FreeMarkerDemo {
         // 获取结果集
         resultSet = TableUtils.getResultSet();
         // 创建包
-        for (MVCEnum mvcEnum: MVCEnum.values()) {
+        for (MVCEnum mvcEnum : MVCEnum.values()) {
             Path path = Paths.get(FILE_PATH, mvcEnum.getName());
             Files.createDirectory(path);
         }
@@ -101,7 +101,7 @@ public class FreeMarkerDemo {
                 generateServiceFile(tableMetaData);
                 // 生成服务实现层文件
                 generateServiceImplFile(tableMetaData);
-                // 生成Dao文件
+                // 生成Dao文  件
                 generateDaoFile(tableMetaData);
                 // 生成controller文件
                 generateControllerFile(tableMetaData);
@@ -140,11 +140,11 @@ public class FreeMarkerDemo {
     }
 
     private void generateServiceImplFile(TableMetaData tableMetaData) throws Exception {
-        Path path = Paths.get(FILE_PATH, SERVICE_IMPL,
-                tableMetaData.getEntityName() + MVCEnum.SERVICE_IMPL.toUpperFirstChar() + JAVA_SUFFIX);
+        Path path = Paths.get(FILE_PATH, "service", "impl",
+                tableMetaData.getEntityName() + "ServiceImpl" + JAVA_SUFFIX);
         Map<String, Object> dataMap = new HashMap<>();
         dataMap.put("entityName", tableMetaData.getEntityName());
-        generateFileByTemplate(SERVICE_IMPL, path, dataMap);
+        generateFileByTemplate("serviceImpl", path, dataMap);
     }
 
     private void generateDaoFile(TableMetaData tableMetaData) throws Exception {
@@ -191,7 +191,7 @@ public class FreeMarkerDemo {
 
     private void generateBaseServiceImplFile() throws Exception {
         final String templateName = "BaseServiceImpl";
-        Path path = Paths.get(FILE_PATH, SERVICE_IMPL, templateName + JAVA_SUFFIX);
+        Path path = Paths.get(FILE_PATH, "service/impl", templateName + JAVA_SUFFIX);
         Map<String, Object> dataMap = new HashMap<>();
         generateFileByTemplate(templateName, path, dataMap);
     }

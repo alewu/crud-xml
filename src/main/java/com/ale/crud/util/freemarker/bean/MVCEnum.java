@@ -2,7 +2,7 @@ package com.ale.crud.util.freemarker.bean;
 
 public enum MVCEnum {
     ENTITY("entity"), CONTROLLER("controller"),
-    SERVICE("service"), SERVICE_IMPL("serviceImpl"), DAO("dao"),
+    SERVICE("service"), SERVICE_IMPL("service/impl"), DAO("dao"),
     MAPPER("mapper"), CONSTANTS("constants");
 
     private final String name;
