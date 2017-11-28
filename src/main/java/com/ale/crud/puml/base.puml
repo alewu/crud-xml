@@ -11,14 +11,14 @@ class BaseServiceImpl{
 
 
 interface BaseService {
-+int insertOne(T t)
-+int deleteOne(Object obj)
++int saveOne(T t)
++int removeOne(Object obj)
 +int updateOne(T t)
 +T getOne(Object obj)
 }
 interface BaseDAO {
-+int insertOne(T t)
-+int deleteOne(Object obj)
++int saveOne(T t)
++int removeOne(Object obj)
 +int updateOne(T t)
 +T getOne(Object obj)
 }
@@ -30,7 +30,8 @@ interface UserDAO
 UserService <|.. UserServiceImpl
 BaseServiceImpl <|-- UserServiceImpl
 BaseService <|--- UserService
-
+BaseServiceImpl o-- BaseDAO
+UserServiceImpl o-- UserDAO
 class UserServiceImpl{
     -UserDAO userDAO
 }

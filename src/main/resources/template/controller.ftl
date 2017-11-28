@@ -32,8 +32,8 @@ public class ${entityName}Controller {
      */
     @PostMapping(${entityName?upper_case}S)
     public Response save${entityName}(${entityName} ${entityName?uncap_first}){
-        ${entityName?uncap_first}Service.saveOne(${entityName?uncap_first});
-        return Response.success();
+        ${entityName} t =  ${entityName?uncap_first}Service.saveOne(${entityName?uncap_first});
+        return Response.success().put("${entityName?uncap_first}Id", t.get${entityName}Id());
     }
     <#if !( customFields[2].columnName ? ends_with("_id") && customFields[3].columnName == "gmt_create" ) >
 
@@ -43,7 +43,7 @@ public class ${entityName}Controller {
      * @description 查询单个${entityName}
      */
     @GetMapping(${entityName?upper_case}_ID)
-    public Response get${entityName}(@PathVariable String ${entityName?uncap_first}Id){
+    public Response get${entityName}(@PathVariable String ${ent ityName?uncap_first}Id){
         ${entityName} ${entityName?uncap_first} = ${entityName?uncap_first}Service.getOne(${entityName?uncap_first}Id);
         return Response.success().put("${entityName?uncap_first}", ${entityName?uncap_first});
     }

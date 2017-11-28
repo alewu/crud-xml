@@ -17,8 +17,13 @@ import java.util.List;
  */
 @Service("${entityName ? uncap_first}Service")
 public class ${entityName}ServiceImpl extends BaseServiceImpl<${entityName}> implements ${entityName}Service{
+    // 采用这种方式注入，为了设置父类中的dao
+    private ${entityName}DAO ${entityName?uncap_first}DAO;
     @Autowired
-    private ${entityName}DAO ${entityName ? uncap_first}DAO;
+    public void set${entityName}DAO(${entityName}DAO ${entityName?uncap_first}DAO) {
+        super.setBaseDAO(${entityName?uncap_first}DAO);
+        this.${entityName?uncap_first}DAO = ${entityName?uncap_first}DAO;
+    }
 
     @Override
     public PageBean<${entityName}> list${entityName}(PageParams pageParams) {
