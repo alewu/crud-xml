@@ -10,7 +10,7 @@ import java.io.Serializable;
  * @description 分页参数类
  */
 @Data
-public class PageParams implements Serializable {
+public class PageParam implements Serializable {
     /*页码偏移量*/
     private Integer offset;
     /*每页显示的记录数*/

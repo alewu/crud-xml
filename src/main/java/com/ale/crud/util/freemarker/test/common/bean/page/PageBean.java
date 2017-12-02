@@ -9,7 +9,7 @@ import java.util.List;
  * 分页类的封装
  */
 @Data
-public class PageBean<E> extends PageParams implements Serializable {
+public class PageBean<E> extends PageParam implements Serializable {
 
     /*总记录数*/
     private Long recordCount;

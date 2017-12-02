@@ -4,7 +4,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.ale.crud.bean.Emp;
 import com.ale.crud.common.page.PageBean;
-import com.ale.crud.common.page.PageParams;
+import com.ale.crud.common.page.PageParam;
 import com.ale.crud.common.response.Msg;
 import com.ale.crud.common.response.Response;
 import com.ale.crud.service.EmpService;
@@ -40,15 +40,15 @@ public class EmpController {
 
     /**
      * 查询员工（分页查询）
-     * @param pageParams 分页参数
+     * @param PageParam 分页参数
      * @return 响应
      */
     @GetMapping("/emps1")
     @ResponseBody
-    public Response getEmpsWithJson(PageParams pageParams){
-        pageParams.setOffset(1);
-        pageParams.setLimit(6);
-        PageBean<Emp> pageBean = empService.listEmps(pageParams);
+    public Response getEmpsWithJson(PageParam PageParam){
+        PageParam.setOffset(1);
+        PageParam.setLimit(6);
+        PageBean<Emp> pageBean = empService.listEmps(PageParam);
         if (pageBean == null) {
             return new Response().failure();
         }

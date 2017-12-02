@@ -1,7 +1,7 @@
 package com.ale.crud.controller;
 
 import com.ale.crud.bean.Dept;
-import com.ale.crud.common.page.PageParams;
+import com.ale.crud.common.page.PageParam;
 import com.ale.crud.common.response.Response;
 import com.ale.crud.constants.RestURIConstants;
 import com.ale.crud.service.DeptService;
@@ -31,8 +31,8 @@ public class DeptController {
      * @description 分页查询部门
      */
     @GetMapping(RestURIConstants.DEPTS)
-    public Response listDept(PageParams pageParams){
-       // PageBean<Dept> pageBean = deptService.listDept(pageParams);
+    public Response listDept(PageParam PageParam){
+       // PageBean<Dept> pageBean = deptService.listDept(PageParam);
         return new Response().success();
     }
 

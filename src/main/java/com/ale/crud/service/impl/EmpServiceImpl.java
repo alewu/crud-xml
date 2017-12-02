@@ -1,11 +1,11 @@
 package com.ale.crud.service.impl;
 
-import com.ale.crud.common.page.PageBean;
-import com.ale.crud.dao.EmpMapper;
-import com.github.pagehelper.PageHelper;
 import com.ale.crud.bean.Emp;
-import com.ale.crud.common.page.PageParams;
+import com.ale.crud.common.page.PageBean;
+import com.ale.crud.common.page.PageParam;
+import com.ale.crud.dao.EmpMapper;
 import com.ale.crud.service.EmpService;
+import com.ale.crud.util.common.PageUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,13 +20,10 @@ public class EmpServiceImpl implements EmpService{
         return empMapper.getAll();
     }
 
-
     @Override
-    public PageBean<Emp> listEmps(PageParams pageParams) {
-        PageHelper.startPage(pageParams.getOffset(), pageParams.getLimit());
+    public PageBean<Emp> listEmps(PageParam pageParam) {
+        PageUtil.startPage(pageParam);
         List<Emp> list = empMapper.getAll();
-        PageBean<Emp> pageBean = new PageBean<>(list);
-        pageBean.setRecordCount(list.size());
-        return pageBean;
+        return PageUtil.getPageBean(list);
     }
 }

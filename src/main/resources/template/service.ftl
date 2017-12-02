@@ -2,7 +2,7 @@ package ${packageName}.service;
 
 import ${packageName}.entity.${entityName};
 import ${packageName}.common.bean.page.PageBean;
-import ${packageName}.common.bean.page.PageParams;
+import ${packageName}.common.bean.page.PageParam;
 
 /**
  * @author ${author}
@@ -11,6 +11,6 @@ import ${packageName}.common.bean.page.PageParams;
  */
 public interface ${entityName}Service extends BaseService<${entityName}> {
 
-    PageBean<${entityName}> list${entityName}(PageParams pageParams);
+    PageBean<${entityName}> list${entityName}(PageParam PageParam);
 
 }

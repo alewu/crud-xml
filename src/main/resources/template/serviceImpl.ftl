@@ -3,7 +3,7 @@ package ${packageName}.service.impl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import ${packageName}.common.bean.page.PageBean;
-import ${packageName}.common.bean.page.PageParams;
+import ${packageName}.common.bean.page.PageParam;
 import ${packageName}.entity.${entityName};
 import ${packageName}.dao.${entityName}DAO;
 import ${packageName}.service.${entityName}Service;
@@ -26,9 +26,9 @@ public class ${entityName}ServiceImpl extends BaseServiceImpl<${entityName}> imp
     }
 
     @Override
-    public PageBean<${entityName}> list${entityName}(PageParams pageParams) {
-        Integer offset = pageParams.getOffset() == null ? 0 : pageParams.getOffset();
-        Integer limit = pageParams.getLimit() == null ? 20 : pageParams.getLimit();
+    public PageBean<${entityName}> list${entityName}(PageParam PageParam) {
+        Integer offset = PageParam.getOffset() == null ? 0 : PageParam.getOffset();
+        Integer limit = PageParam.getLimit() == null ? 20 : PageParam.getLimit();
         PageHelper.startPage(offset, limit);
         List<${entityName}> list = ${entityName ? uncap_first}DAO.list${entityName}();
         PageInfo<${entityName}> pageInfo = new PageInfo<>(list);

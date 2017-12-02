@@ -5,7 +5,7 @@ package ${packageName}.controller;
 
 import ${packageName}.entity.${entityName};
 import ${packageName}.common.bean.page.PageBean;
-import ${packageName}.common.bean.page.PageParams;
+import ${packageName}.common.bean.page.PageParam;
 import ${packageName}.common.bean.Response;
 import ${packageName}.constants.RestURIConstants;
 import ${packageName}.service.${entityName}Service;
@@ -54,8 +54,8 @@ public class ${entityName}Controller {
      * @description 分页查询${entityName}
      */
     @GetMapping(${entityName?upper_case}S)
-    public Response list${entityName}(PageParams pageParams){
-        PageBean<${entityName}> pageBean = ${entityName?uncap_first}Service.list${entityName}(pageParams);
+    public Response list${entityName}(PageParam PageParam){
+        PageBean<${entityName}> pageBean = ${entityName?uncap_first}Service.list${entityName}(PageParam);
         return Response.success().put("pageBean", pageBean);
     }
 
