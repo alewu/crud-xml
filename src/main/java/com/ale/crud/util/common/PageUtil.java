@@ -18,8 +18,10 @@ public class PageUtil {
 //    }
 
     public static void startPage(PageParam pageParam){
-        Integer  pageNum = pageParam.getOffset() == null ? 1 : pageParam.getOffset();
-        Integer pageSize = pageParam.getLimit() == null ? 20 : pageParam.getLimit();
+        Integer offset = pageParam.getOffset();
+        Integer  pageNum = offset == null ? 1 : offset;
+        Integer limit = pageParam.getLimit();
+        Integer pageSize = limit == null ? 20 : limit;
         PageHelper.startPage(pageNum, pageSize);
     }
 

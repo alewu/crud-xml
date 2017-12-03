@@ -1,12 +1,16 @@
 package com.ale.crud.controller;
 
 import com.ale.crud.bean.Dept;
+import com.ale.crud.common.page.PageBean;
 import com.ale.crud.common.page.PageParam;
 import com.ale.crud.common.response.Response;
 import com.ale.crud.constants.RestURIConstants;
 import com.ale.crud.service.DeptService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import static com.ale.crud.constants.RestURIConstants.DEPTS;
+import static com.ale.crud.constants.RestURIConstants.DEPT_ID;
 
 /**
  * @author alewu
@@ -18,7 +22,8 @@ import org.springframework.web.bind.annotation.*;
 public class DeptController {
     @Autowired
     private DeptService deptService;
-    @GetMapping(RestURIConstants.DEPT_ID)
+
+    @GetMapping(DEPT_ID)
     public Response getDept(@PathVariable Long deptId){
         //Dept dept = deptService.getDept(deptId);
        // return new Response().success(dept);
@@ -30,9 +35,9 @@ public class DeptController {
      * @date 2017/10/30 11:14
      * @description 分页查询部门
      */
-    @GetMapping(RestURIConstants.DEPTS)
+    @GetMapping(DEPTS)
     public Response listDept(PageParam PageParam){
-       // PageBean<Dept> pageBean = deptService.listDept(PageParam);
+        PageBean<Dept> pageBean = deptService.listDept(PageParam);
         return new Response().success();
     }
 
@@ -41,7 +46,7 @@ public class DeptController {
      * @date 2017/10/30 11:13
      * @description 新增单个部门
      */
-    @PostMapping(RestURIConstants.DEPTS)
+    @PostMapping(DEPTS)
     public Response addDept(@RequestBody Dept dept){
         //deptService.addDept(dept);
         return new Response().success(dept);
@@ -63,9 +68,9 @@ public class DeptController {
      * @date 2017/10/30 11:15
      * @description 删除单个部门
      */
-    @DeleteMapping(RestURIConstants.DEPT_ID)
+    @DeleteMapping(DEPT_ID)
     public Response deleteDept(@PathVariable Long deptId){
-        //deptService.deleteDept(deptId);
+        deptService.deleteOne(deptId);
         return new Response().success();
     }
 
@@ -87,7 +92,7 @@ public class DeptController {
      * @date 2017/10/30 11:15
      * @description 更新部门信息
      */
-    @PutMapping(RestURIConstants.DEPT_ID)
+    @PutMapping(DEPT_ID)
     public Response updateDept(@PathVariable String deptId,Dept dept){
        // int m = deptService.updateDept(dept);
         return new Response().success();

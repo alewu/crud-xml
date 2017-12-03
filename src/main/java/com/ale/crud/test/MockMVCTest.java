@@ -14,9 +14,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
-
 import org.springframework.test.web.servlet.MvcResult;
-
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.client.RestTemplate;
@@ -25,7 +23,8 @@ import org.springframework.web.context.WebApplicationContext;
 import java.util.List;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+
 
 /**
  * 使用spring测试模块提供的测试请求功能，测试crud 请求的
@@ -84,19 +83,19 @@ public class MockMVCTest {
         String requestBody = "[{\"deptName\":\"development4\"}," +
                 "{\"deptName\":\"development5\"}," +
                 "{\"deptName\":\"development6\"}]";
-       this.mockMvc.perform(post("/web/dept/depts") // 请求的url,请求的方法是post
-                        .contentType(MediaType.APPLICATION_JSON_UTF8) // 数据的类型
-                        .content(requestBody) // 内容
-                        .accept(MediaType.APPLICATION_JSON_UTF8))
-                        .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
-                        .andDo(MockMvcResultHandlers.print()) // 添加ResultHandler结果处理器，比如调试时打印结果到控制台（对返回的数据进行的判断）；
-                        .andReturn(); //最后返回相应的MvcResult；然后进行自定义验证/进行下一步的异步处理（对返回的数据进行的判断）；
+        this.mockMvc.perform(post("/web/dept/depts") // 请求的url,请求的方法是post
+                .contentType(MediaType.APPLICATION_JSON_UTF8) // 数据的类型
+                .content(requestBody) // 内容
+                .accept(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andDo(MockMvcResultHandlers.print()) // 添加ResultHandler结果处理器，比如调试时打印结果到控制台（对返回的数据进行的判断）；
+                .andReturn(); //最后返回相应的MvcResult；然后进行自定义验证/进行下一步的异步处理（对返回的数据进行的判断）；
 
-                //.andExpect(status().isOk())
-                //.andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
-                //.andDo(MockMvcResultHandlers.print())
-                //.accept(MediaType.parseMediaType("application/json;charset=UTF-8")))
-                //.andExpect(jsonPath("$.name").value("Lee"));
+        //.andExpect(status().isOk())
+        //.andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
+        //.andDo(MockMvcResultHandlers.print())
+        //.accept(MediaType.parseMediaType("application/json;charset=UTF-8")))
+        //.andExpect(jsonPath("$.name").value("Lee"));
 
     }
 
