@@ -98,11 +98,11 @@
     </select>
 
     <select id="list${entityName}" resultMap="BaseResultMap">
-        <bind name="pattern_keyword" value="'%' + keyword + '%'"/>
         SELECT <include refid="Base_Column_List"/>
         FROM ${tableName}
         <where>
             <if test="keyword !=null and keyword != ''">
+                <bind name="pattern_keyword" value="'%' + keyword + '%'"/>
                 columnName LIKE  ${r'#{'}pattern_keyword${r'}'} OR columnName LIKE ${r'#{'}pattern_keyword${r'}'}
             </if>
         </where>
