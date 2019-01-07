@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.ale.crud.dao.UserDAO">
+<mapper namespace="com.ale.dao.UserDAO">
 
     <sql id="Base_Column_List">
         user_id, username, age, sex, gmt_create, gmt_modified
     </sql>
 
-    <select id="getOne" resultType="com.ale.crud.bean.User">
+    <select id="getOne" resultType="com.ale.entity.User">
         select
         <include refid="Base_Column_List"/>
         from tb_user
         where user_id = #{obj}
     </select>
 
-    <update id="updateOne" parameterType="com.ale.crud.bean.User">
+    <update id="updateOne" parameterType="com.ale.entity.User">
         UPDATE tb_user
         SET username    = #{username,jdbcType=VARCHAR}
         WHERE user_id = #{userId,jdbcType=INTEGER}

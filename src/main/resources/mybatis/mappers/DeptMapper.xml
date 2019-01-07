@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.ale.crud.dao.DeptDAO">
-    <resultMap id="BaseResultMap" type="com.ale.crud.bean.Dept">
+<mapper namespace="com.ale.dao.DeptDAO">
+    <resultMap id="BaseResultMap" type="com.ale.entity.Dept">
         <id column="dept_id" jdbcType="INTEGER" property="deptId"/>
         <result column="dept_name" jdbcType="VARCHAR" property="deptName"/>
         <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate"/>
@@ -21,19 +21,19 @@
         DELETE FROM dept
         WHERE dept_id = #{deptId,jdbcType=INTEGER}
     </delete>
-    <insert id="addDept" parameterType="com.ale.crud.bean.Dept">
+    <insert id="addDept" parameterType="com.ale.entity.Dept">
         INSERT INTO dept (dept_id, dept_name, gmt_create,
                           gmt_modified)
         VALUES (#{deptId,jdbcType=INTEGER}, #{deptName,jdbcType=VARCHAR}, #{gmtCreate,jdbcType=TIMESTAMP},
                 #{gmtModified,jdbcType=TIMESTAMP})
     </insert>
-    <insert id="insert" parameterType="com.ale.crud.bean.Dept">
+    <insert id="insert" parameterType="com.ale.entity.Dept">
         INSERT INTO dept (dept_id, dept_name, gmt_create,
                           gmt_modified)
         VALUES (#{deptId,jdbcType=INTEGER}, #{deptName,jdbcType=VARCHAR}, #{gmtCreate,jdbcType=TIMESTAMP},
                 #{gmtModified,jdbcType=TIMESTAMP})
     </insert>
-    <insert id="insertSelective" parameterType="com.ale.crud.bean.Dept">
+    <insert id="insertSelective" parameterType="com.ale.entity.Dept">
         insert into dept
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="deptId != null">
@@ -64,7 +64,7 @@
             </if>
         </trim>
     </insert>
-    <update id="updateByPrimaryKeySelective" parameterType="com.ale.crud.bean.Dept">
+    <update id="updateByPrimaryKeySelective" parameterType="com.ale.entity.Dept">
         update dept
         <set>
             <if test="deptName != null">
@@ -79,7 +79,7 @@
         </set>
         where dept_id = #{deptId,jdbcType=INTEGER}
     </update>
-    <update id="updateByPrimaryKey" parameterType="com.ale.crud.bean.Dept">
+    <update id="updateByPrimaryKey" parameterType="com.ale.entity.Dept">
         UPDATE dept
         SET dept_name    = #{deptName,jdbcType=VARCHAR},
             gmt_create   = #{gmtCreate,jdbcType=TIMESTAMP},

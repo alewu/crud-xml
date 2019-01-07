@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.ale.crud.dao.EmpMapper">
-    <resultMap id="BaseResultMap" type="com.ale.crud.bean.Emp">
+<mapper namespace="com.ale.dao.EmpMapper">
+    <resultMap id="BaseResultMap" type="com.ale.entity.Emp">
         <id column="emp_id" jdbcType="INTEGER" property="empId"/>
         <result column="dept_id" jdbcType="INTEGER" property="deptId"/>
         <result column="emp_name" jdbcType="VARCHAR" property="empName"/>
@@ -15,14 +15,14 @@
         emp_id, dept_id, emp_name, age, gender, email, gmt_create, gmt_modified
     </sql>
 
-    <resultMap id="WithDeptResultMap" type="com.ale.crud.bean.Emp">
+    <resultMap id="WithDeptResultMap" type="com.ale.entity.Emp">
         <id column="emp_id" jdbcType="INTEGER" property="empId" />
         <result column="emp_name" jdbcType="VARCHAR" property="empName" />
         <result column="gender" jdbcType="CHAR" property="gender" />
         <result column="email" jdbcType="VARCHAR" property="email" />
         <result column="dept_id" jdbcType="INTEGER" property="deptId" />
         <!-- 关联department信息 指定联合查询出的字段信息封装 -->
-        <association property="dept" javaType="com.ale.crud.bean.Dept" >
+        <association property="dept" javaType="com.ale.entity.Dept">
             <id column="dept_id" property="deptId" />
             <result column="dept_name" property="deptName" />
         </association>
@@ -43,7 +43,7 @@
     where emp_id = #{empId,jdbcType=INTEGER}
   </delete>
 
-    <insert id="insert" parameterType="com.ale.crud.bean.Emp">
+    <insert id="insert" parameterType="com.ale.entity.Emp">
     insert into emp (emp_id, dept_id, emp_name, 
       age, gender, email, gmt_create, 
       gmt_modified)
@@ -52,7 +52,7 @@
       #{gmtModified,jdbcType=TIMESTAMP})
   </insert>
 
-    <insert id="insertSelective" parameterType="com.ale.crud.bean.Emp">
+    <insert id="insertSelective" parameterType="com.ale.entity.Emp">
         insert into emp
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="empId != null">
@@ -108,7 +108,7 @@
         </trim>
     </insert>
 
-    <update id="updateByPrimaryKeySelective" parameterType="com.ale.crud.bean.Emp">
+    <update id="updateByPrimaryKeySelective" parameterType="com.ale.entity.Emp">
         update emp
         <set>
             <if test="deptId != null">
@@ -136,7 +136,7 @@
         where emp_id = #{empId,jdbcType=INTEGER}
     </update>
 
-    <update id="updateByPrimaryKey" parameterType="com.ale.crud.bean.Emp">
+    <update id="updateByPrimaryKey" parameterType="com.ale.entity.Emp">
     update emp
     set dept_id = #{deptId,jdbcType=INTEGER},
       emp_name = #{empName,jdbcType=VARCHAR},
