@@ -5,7 +5,6 @@ import com.ale.common.page.PageParam;
 import com.ale.dao.EmpMapper;
 import com.ale.entity.Emp;
 import com.ale.service.EmpService;
-import com.ale.util.common.PageUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

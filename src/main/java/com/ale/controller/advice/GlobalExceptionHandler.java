@@ -1,6 +1,5 @@
 package com.ale.controller.advice;
 
-import com.ale.util.common.R;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;

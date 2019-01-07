@@ -1,7 +1,6 @@
 package com.ale.common.controller;
 
 import com.ale.common.response.MyResponse;
-import com.ale.util.common.AliyunOSSClientUtil;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -20,7 +19,7 @@ public class SysOssController {
      * @description 上传阿里云
      */
     @PostMapping("/files")
-    public MyResponse upload(@RequestParam("files") MultipartFile[] files) throws Exception {
+    public MyResponse upload(@RequestParam("files") MultipartFile[] files) {
         if (files != null && files.length > 0) {
             List<String> fileURLs = AliyunOSSClientUtil.upload(files);
             return MyResponse.ok().put("fileURLs", fileURLs);

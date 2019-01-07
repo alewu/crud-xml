@@ -1,8 +1,8 @@
 package com.ale.interceptor;
 
+import com.ale.common.AuthenticationUtil;
 import com.ale.entity.User;
 import com.ale.threadlocal.UserThreadLocal;
-import com.ale.util.common.AuthenticationUtil;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 

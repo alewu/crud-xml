@@ -5,7 +5,6 @@ import com.ale.common.page.PageParam;
 import com.ale.dao.DeptDAO;
 import com.ale.entity.Dept;
 import com.ale.service.DeptService;
-import com.ale.util.common.PageUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
